@@ -1,0 +1,37 @@
+<div class="container text-center" style="background: beige">
+  <div class="row align-items-center">
+    <div class="col">
+      <h4>Agrega tus productos</h4>
+
+      <form id="formulario" action="/api/products" method="post">
+        <input class="form" type="text" name="title" id="title" placeholder="Title" required />
+        <input class="form" type="text" name="description" id="description" placeholder="Description" required />
+        <input class="form" type="text" name="code" id="code" placeholder="Code" required />
+        <input class="form" type="number" name="precio" id="precio" placeholder="Price" required />
+        <input class="form" type="text" name="status" id="status" placeholder="Status" />
+        <input type="number" class="form" name="stock" id="stock" placeholder="Stock" >
+        <input class="form" type="text" name="category" id="category" placeholder="Category"  required />
+        <input class="form" type="text" name="thumbnail" id="thumbnail" placeholder="Thumbnail"/> </br>
+        </br>
+        <input type="submit" value="ENVIAR" style="color:black; background: orange"/>
+      </form>
+    </div>
+    <div class="col">
+      <h4>Eliminar un producto</h4>
+      <form id="deleteForm" action="/api/products" method="delete">
+        <input type="number" name="pID" id="pID" placeholder="ID"/>
+        <input type="submit" value="eliminar" style="color:black; background: orange"/>
+        <P>(Haz doble click para eliminar un producto)</P>
+      </form>
+    </div>
+    <div class="col">
+      <h4>PRODUCTOS</h4>
+      <p id="list"></p>
+      <a href="/" style="background-color: antiquewhite;text-decoration:none; color: black; padding: 2%;">Ver Productos></a>
+    </div>
+  </div>
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/index.js"></script>

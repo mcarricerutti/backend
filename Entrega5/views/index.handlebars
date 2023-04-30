@@ -1,0 +1,21 @@
+{{#if products.length}}
+{{#each products}}
+
+
+<div class="card text-center" style="width: 10rem;background: beige;margin: 1rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{title}}</h5>
+    <p class="card-text">${{precio}}</p>
+    <pclass="card-text">Id: {{id}}</p>
+  </div>
+</div>
+
+{{/each}}
+
+{{else}}
+<p class="text-center" style="color:rgb(136, 123, 123); margin:15rem">(NO HAY PRODUCTOS REGISTRADOS)</p>
+<a style="background-color: antiquewhite;text-decoration:none; color: black; padding: 2%;" href="/realtimeproducts">Agregar Productos></a>
+
+{{/if}}
+
+<script src="/socket.io/socket.io.js"></script>
