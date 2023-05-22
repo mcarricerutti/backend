@@ -1,0 +1,80 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+body{
+    background-color: rgb(221, 152, 88);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+}
+#formulario{
+    margin-top: 2%;
+    width: 100%;
+    margin-left: 5%;
+}
+
+.btnAgg{
+    background-color: rgb(255, 136, 0);
+}
+
+/* material UI form */
+form{
+    width: 40%;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: white;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+/* form label */
+label{
+    font-weight: bold;
+}
+/* form input */
+input{
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+ul{
+    margin:2rem;
+    display: flex;
+    flex-direction: row;
+}
+ul li{
+    width: 30%;
+    margin-left: 2%;
+    list-style: none;
+    margin-bottom: 0.5rem;
+    background-color: white;
+    padding: 10px;
+    border-radius: 0.25rem;
+    text-align: center;
+}
+
+/* MUI Button */
+button{
+    padding: 6px;
+    border: none;
+    border-radius: 0.25rem;
+    background-color: #ffd900;
+    color: white;
+    cursor: pointer;
+    margin-top: 2%;
+}
+
+/*find by id */
+#chatDiv{
+    margin: 20px
+}
+#parrafoMensajes{
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 5px;
+}
