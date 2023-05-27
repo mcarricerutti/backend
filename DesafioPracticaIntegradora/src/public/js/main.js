@@ -1,4 +1,3 @@
-// La carpeta publica es el cliente
 const socket= io();
 
 //socket.emit() //enviar eventos

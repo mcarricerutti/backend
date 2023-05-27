@@ -64,23 +64,14 @@ const newProduct=null;
 
 io.on('connection', async(socket)=>{//cuando se establece la conexion envio un mensaje
     console.log('Cliente conectado');
-    //Onload
-
-    //FS
-    // const productManager = new ProductManager('./src/products.txt');
-    // const onLoadProducts= await productManager.getProducts();
-
+  
     //Mongo
     const onLoadProducts= await productModel.find(); 
-    //productModel.insertMany(onLoadProducts);
     socket.emit('server:onloadProducts', onLoadProducts);
 
     //NewProduct
     socket.on('client:newproduct', async (data) => {
         const newProduct = new Product(data.title, data.description, data.thumbnails, data.price, data.code, data.stock, data.status, data.category)
-        //FS
-        // await productManager.addProduct(newProduct);
-        // const updatedProducts= await productManager.getProducts();
 
         //Mongo
         await productModel.create(newProduct);
@@ -90,9 +81,6 @@ io.on('connection', async(socket)=>{//cuando se establece la conexion envio un m
 
     //DeleteProduct
     socket.on('client:deleteProduct', async (id) => {
-        //FS
-        // await productManager.deleteProduct(id);
-        // const updatedProducts= await productManager.getProducts();
         
         //Mongo
         await productModel.deleteOne({_id: id});
@@ -112,10 +100,6 @@ io.on('connection', async(socket)=>{//cuando se establece la conexion envio un m
     });
 }) 
 
-// app.use(async(req, res, next) => {
-//     req.io = io;
-//     return next();
-//   });
 
 //Routes
 app.use('/api/products', productRouter);

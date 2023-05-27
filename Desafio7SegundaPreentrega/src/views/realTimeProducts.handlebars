@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <form id="formulario" action="/api/products" method="post">
+        Title:<input class="form" type="text" name="title" id="title" required />
+        Description:
+        <input class="form" type="text" name="description" id="description" required />
+        Code:
+        <input class="form" type="number" name="code" id="code" required />
+        precio:
+        <input class="form" type="number" name="precio" id="precio" required />
+        Status:
+        <input class="form" type="text" name="status" id="status" />
+        Stock:
+        <input type="number" class="form" name="stock" id="stock">
+        Category:
+        <input class="form" type="text" name="category" id="category" required />
+        Thumbnails:
+        <input class="form" type="text" name="thumbnails" id="thumbnails" />
+        <input type="submit" value="ENVIAR" class="enviar"/>
+      </form>
+
+    </div>
+    {{!-- <div class="col-md-4">
+      <h4 class="titleElim">Eliminar un producto</h4>
+      <form id="deleteForm" action="/api/products" method="delete">
+        <input type="number" name="pID" id="pID" placeholder="ID"/>
+        <input type="submit" value="ELIMINAR" class="enviar"/>
+      </form>
+    </div> --}}
+  </div>
+</div>
+
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/index.js"></script>

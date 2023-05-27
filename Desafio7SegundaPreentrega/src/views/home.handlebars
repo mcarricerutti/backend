@@ -1,0 +1,31 @@
+{{#if usersDocuments}}
+{{#each usersDocuments}}
+
+<ul id="list">
+    {{#each usersDocuments}}
+    <li>
+        <p><strong>id:</strong> {{this._id}}</p>
+        <p><strong>title:</strong> {{this.title}}</p>
+        <p><strong>description:</strong>{{this.description}}</p>
+        <p><strong>thumbnails:</strong> {{this.thumbnails}}</p>
+        <p><strong>price:</strong> {{this.price}}</p>
+        <p><strong>code:</strong> {{this.code}}</p>
+        <p><strong>stock:</strong> {{this.stock}}</p>
+        <p><strong>category:</strong> {{this.category}}</p>
+        <br>
+    </li>
+    {{/each}}
+</ul>
+
+
+{{/each}}
+
+{{else}}
+<div class="contHome">
+    <h2>NO HAY PRODUCTOS REGISTRADOS</h2>
+    <a class="enlaAgg" href="/agregar">CARGAR PRODUCTOS></a>
+</div>
+
+{{/if}}
+
+<script src="/socket.io/socket.io.js"></script>
