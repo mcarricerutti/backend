@@ -1,0 +1,29 @@
+<div class="form-signin container d-flex justify-content-center" style="max-width:400px; height:100vh">
+    <form method="post" action="/sessions/register" class="register-form align-self-center border rounded-3 p-3 w-100" >
+        <br/>
+        <h1 class="h3 mb-3 fw-normal">Registro</h1>
+        <div class="form-floating mb-2 rounded-top">
+            <input type="text" name="first_name" class="form-control py-auto " id="floatingInput"/>
+            <label for="floatingInput">Nombre</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="text" name="last_name" class="form-control py-auto " id="floatingInput"/>
+            <label for="floatingInput">Apellido</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="email" name="email" class="form-control py-auto" id="floatingInput"/>
+            <label for="floatingInput">Email</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="number" name="age" min="17" max="90" class="form-control py-auto" id="floatingInput"/>
+            <label for="floatingInput">Edad</label>
+        </div>        
+        <div class="form-floating mb-2">
+            <input type="password" name="password"class="form-control" id="floatingPassword" />
+            <label for="floatingPassword">Password</label>
+        </div>
+        <br/>
+        <button class="w-100 btn btn-lg " style="background-color: orange;" type="submit">Registrate</button>
+        <p class="mt-5 mb-3 text-body-secondary">© mi-tienda</p>
+    </form>
+</div>
