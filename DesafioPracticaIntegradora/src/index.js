@@ -5,34 +5,16 @@ import mongoose from 'mongoose';
 import productRouter from './routes/product.routes.js';
 import cartRouter from './routes/cart.routes.js';
 import { __dirname } from './path.js';
-//import multer from 'multer';
 import { engine } from 'express-handlebars';
 import * as path from 'path';
 
-import { ProductManager, Product } from './ProductManager.js';
-
 //models
 import {productModel} from './models/Products.js';
-import {cartModel} from './models/Cart.js';
 import {messageModel} from './models/Messages.js';
-import { log } from 'console';
 
 
-
-//Configuraciones de Express
 export const app = express();
 const port = process.env.PORT;
-
-
-// //Configuracion de Multer
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb)=>{
-//         cb(null, 'src/public/img')
-//     },
-//     filename: (req, file, cb)=>{
-//         cb(null, file.originalname)
-//     }
-// })
 
 //Configuracion de Handlebars
 app.engine('handlebars', engine());//Voy a trabajar con handlebars
@@ -45,8 +27,6 @@ app.use(express.urlencoded({ extended: true }));//Permite poder usar Query Strin
 //const upload = multer({storage: storage})//metodo de multer para subir archivos
 
 
-
-
 mongoose.connect(process.env.URL_MONGODB_ATLAS)
 .then(() => console.log('Conectado a MongoDB Atlas'))
 .catch(error => console.log(error));
@@ -54,7 +34,7 @@ mongoose.connect(process.env.URL_MONGODB_ATLAS)
 
 
 //Escuchar Servidor
-const server=app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 });
 
