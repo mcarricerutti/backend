@@ -49,6 +49,16 @@ io.on('connection', async(socket)=>{//cuando se establece la conexion envio un m
     const onLoadProducts= await productModel.find(); 
     socket.emit('server:onloadProducts', onLoadProducts);
 
+    function Product(title, description, thumbnails, price, code, stock, status, category) {
+      this.title = title;
+      this.description = description;
+      this.thumbnails = thumbnails;
+      this.price = price;
+      this.code = code;
+      this.stock = stock;
+      this.status = status;
+      this.category = category;
+    }
     //NewProduct
     socket.on('client:newproduct', async (data) => {
         const newProduct = new Product(data.title, data.description, data.thumbnails, data.price, data.code, data.stock, data.status, data.category)
