@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 style="text-align: center;">¡{{user.first_name}}, te damos la bienvenida a nuestra tienda!</h1>
+        </div>
+        <div class="col-md-4">
+            <button onclick="window.location.href='/api/sessions/logout'" style="margin-top: 4%;">Cerrar Session</button>
+            <button class="btn btn-outline-primary"
+            onclick="window.location.href='/api/carts/{{user.cart.id_cart}}'">🛒</button>
+            <button class="btn btn-outline-primary" onclick="window.location.href='/api/sessions/profile'">👤</button
+        </div>
+    </div>
+</div>
+<div>
+    <br>
+    <h1 style="font-size:22px">Todos los productos</h1>
+    <br>
+
+    <ul id="docs" class="d-flex justify-content-center flex-wrap gap-4 p-0">
+        {{#each pagProducts.docs}}
+        <li class="card" style="width: 20rem;">
+            <img src={{this.thumbnails}}[0] class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{this.title}}</h5>
+                    <p><strong>id:</strong> {{this._id}}</p>
+                    <p><strong>description:</strong>{{this.description}}</p>
+                    <p><strong>price:</strong> {{this.precio}}</p>
+                    <p><strong>code:</strong> {{this.code}}</p>
+                    <p><strong>stock:</strong> {{this.stock}}</p>
+                    <p><strong>category:</strong> {{this.category}}</p>
+                    <br>
+                    <button data-id={{this._id}} class="postButton btn btn-primary bottom-0" >Agregar 🛒</button>
+            </div>
+        </li>
+
+        {{/each}}
+    </ul>
+        <ul class="pagination justify-content-center">
+        {{#if pagProducts.hasPrevPage}}
+        <li class="page-item"><a class="page-link" href={{pagProducts.prevLink}}>Anterior</a></li>
+        <li class="page-item"><a class="page-link" href={{pagProducts.prevLink}}>{{pagProducts.prevPage}}</a></li>
+        {{else}}
+        <li class="page-item"><a class="page-link disabled" href={{pagProducts.prevLink}}>Anterior</a></li>
+        {{/if}}
+        <li class="page-item"><a class="page-link" href=''>{{pagProducts.page}}</a></li>
+        {{#if pagProducts.hasNextPage}}
+        <li class="page-item"><a class="page-link" href={{pagProducts.nextLink}}>{{pagProducts.nextPage}}</a></li>
+        <li class="page-item"><a class="page-link" href={{pagProducts.nextLink}}>Siguiente</a></li>
+        {{else}}
+        <li class="page-item"><a class="page-link disabled" href={{pagProducts.nextLink}}>Siguiente</a></li>
+        {{/if}}
+    </ul>
+</div>

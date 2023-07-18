@@ -1,0 +1,120 @@
+[
+  {
+    "id": 1,
+    "title": "JUICE D/LAB",
+    "description": "The Juice D/LAB took the world by storm last year, the lmost advanced freeride kites on the market. Unrivalled in light wind performance, it enables riders to experience insane feelings in the softest of breezes. This is the kites that can do the impossible.",
+    "thumbnails": [
+      "https://cdn.boards-and-more.com/system/product_picture_gallery_pictures/files/634f/e980/9534/ba00/cc0c/a7c9/xlarge/JUICE23_D_LAB.png?1666181475"
+    ],
+    "price": 3499,
+    "code": 1,
+    "stock": 15,
+    "status": true,
+    "category": "kites"
+  },
+  {
+    "id": 2,
+    "title": "EVO",
+    "description": "The perfect kites for riders who want to have it all, the Evo is incredible for boosting big jumps, freeriding, hooked freestyle and riding waves. Packed with performance and easy and intuitive to fly it will allow you to progress your riding with confidence.",
+    "thumbnails": [
+      "https://cdn.boards-and-more.com/system/product_picture_gallery_pictures/files/6142/f087/26f8/0600/af40/d4ab/xlarge/EVO22_C05_%281%29.png?1631776886"
+    ],
+    "price": 1390,
+    "code": 2,
+    "stock": 15,
+    "status": true,
+    "category": "kites"
+  },
+  {
+    "id": 3,
+    "title": "EVO SLS",
+    "description": "The best performance all-rounder in the Duotone line up! The Evo SLS is exceedingly capable as a freeride, big air, hooked freestyle, and with the SLS construction, delivers an unparalleled dynamic flying experience.",
+    "thumbnails": [
+      "https://cdn.boards-and-more.com/system/product_picture_gallery_pictures/files/630c/cce4/c5b4/8600/e5c6/8df2/xlarge/EVO23_SLS_C08_%281%29.png?1661783234"
+    ],
+    "price": 1800,
+    "code": 3,
+    "stock": 15,
+    "status": true,
+    "category": "kites"
+  },
+  {
+    "id": 4,
+    "title": "EVO D/LAB",
+    "description": "The new Evo D/LAB offers the ultimate in freeride kitessurfing with never-previously experienced performance in a huge range of conditions with incredible low-end power and total control.",
+    "thumbnails": [
+      "https://cdn.boards-and-more.com/system/product_picture_gallery_pictures/files/63cf/a796/6c08/8b00/cdb5/506a/xlarge/EVO23_D_LAB.png?1674553208"
+    ],
+    "price": 2490,
+    "code": 4,
+    "stock": 15,
+    "status": true,
+    "category": "kites"
+  },
+  {
+    "id": 5,
+    "title": "NEO",
+    "description": "The Neo is the gold standard for kitesboarding in waves, with incredible drift, total control, and capable of getting you to the top of the podium in wave and strapless freestyle competitions. If you ride a surfboard, this is the kites for you, pure performance, and incredible durability.",
+    "thumbnails": [
+      "https://cdn.boards-and-more.com/system/product_picture_gallery_pictures/files/6099/3137/6fb3/2100/a800/0b54/xlarge/NEO22_CC2.png?1620652325"
+    ],
+    "price": 1390,
+    "code": 5,
+    "stock": 15,
+    "status": true,
+    "category": "kites"
+  },
+  {
+    "id": 6,
+    "title": "NEO SLS",
+    "description": "The best wave kites on the market got the SLS treatment; stronger, lighter, and superior, with Penta TX and Trinity TX combining to make a super light and durable kites. With incredible drift, dynamic turning, and a huge range, the Neo SLS is the only kites to take on the water if you ride a surfboard.",
+    "thumbnails": [
+      "https://cdn.boards-and-more.com/system/product_picture_gallery_pictures/files/62c5/6086/cc9d/9200/d167/125c/xlarge/NEO23_SLS_CC04.png?1657102436"
+    ],
+    "price": 1640,
+    "code": 6,
+    "stock": 15,
+    "status": true,
+    "category": "kites"
+  },
+  {
+    "id": 7,
+    "title": "NEO D/LAB",
+    "description": "The new Evo D/LAB offers the ultimate in freeride kitessurfing with never-previously experienced performance in a huge range of conditions with incredible low-end power and total control.",
+    "thumbnails": [
+      "https://cdn.boards-and-more.com/system/product_picture_gallery_pictures/files/63cf/a796/6c08/8b00/cdb5/506a/xlarge/EVO23_D_LAB.png?1674553208"
+    ],
+    "price": 2590,
+    "code": 7,
+    "stock": 15,
+    "status": true,
+    "category": "kites"
+  },
+  {
+    "id": 8,
+    "title": "REBEL SLS PORSCHE EDITION",
+    "description": "No matter how you choose to ride, the Rebel SLS has a well-deserved legendary status! Easy to jump, with huge hangtime, now even a kites looping machine and a big air monster, a favourite of our pro riders for boosting to the moon and winning in Big Air competitions.",
+    "thumbnails": [
+      "https://cdn.boards-and-more.com/system/product_picture_gallery_pictures/files/6352/91f7/7c15/b400/cc4d/cb30/xlarge/REBEL23_PORSCHE_12.png?1666355675"
+    ],
+    "video": "https://youtu.be/gomUUDGrz3k",
+    "price": 1950,
+    "code": 8,
+    "stock": 15,
+    "status": true,
+    "category": "kites"
+  },
+  {
+    "id": 9,
+    "title": "REBEL SLS",
+    "description": "No matter how you choose to ride, the Rebel SLS has a well-deserved legendary status! Easy to jump, with huge hangtime, now even a kites looping machine and a big air monster, a favourite of our pro riders for boosting to the moon and winning in Big Air competitions.",
+    "thumbnails": [
+      "https://cdn.boards-and-more.com/system/product_picture_gallery_pictures/files/62c5/60e6/cc9d/9200/e567/124f/xlarge/REBEL23_C05.png?1657102530"
+    ],
+    "price": 1770,
+    "code": 9,
+    "stock": 15,
+    "status": true,
+    "category": "kites"
+  }
+]
