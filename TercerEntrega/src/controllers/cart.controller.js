@@ -2,7 +2,7 @@ import cartService from '../services/cart.service.js';
 import productService from '../services/product.service.js';
 import ticketService from '../services/ticket.service.js';
 import { getNextSequence } from '../persistencia/mongoDB/models/counters.model.js';
-import sendMail from '../utils/nodemailer.js'
+import sendMail from '../utils/nodemailer.js';
 
 export const createCart = async (req, res) => {
     try {
@@ -10,6 +10,7 @@ export const createCart = async (req, res) => {
         res.status(200).send(newCart);
     }
     catch (error) {
+        //res.status(500).json({message: "Error",error});
         res.status(500).send("ERROR: " + error);
     }
 };
@@ -17,8 +18,10 @@ export const createCart = async (req, res) => {
 export const getCarts = async (req, res) => {
     try {
         const carts = await cartService.findAll();
+        //res.status(200).json({message: "Carts",carts});
         res.status(200).send(carts);
     } catch (error) {
+        //res.status(500).json({message: "Error",error});
         res.status(500).send("ERROR: " + error);
     }
 };
@@ -33,19 +36,18 @@ export const getCartById = async (req, res) => {
     }
 };
 
-export const addProductOnCart = async (req, res) => {
+export const addProductOnCart = async (req, res, next) => {
     const cid = req.params.cid;
     const pid = req.params.pid;
-    const { quantity } = req.body
+    const { quantity } = req.body //Consulto el dato quantity enviado por postman
     try {
         const cart = await cartService.findById(cid);
         const product = await productService.findById(pid);
         if (!product) {
             res.status(200).send("Producto no existe" + product);
         }
-        //if product is already in cart
         if (cart.products.find(product => product.id_prod == pid)) {
-            //find cart and product and update incrementing quantity
+            
             const filter = { _id: cid, "products.id_prod": pid };
             const update = { $inc: { "products.$.quantity": quantity } };
             const options = { new: true };
@@ -53,16 +55,14 @@ export const addProductOnCart = async (req, res) => {
             res.status(200).send(updatedCart);
         }
         else {
-            //if product is not in cart, add it
             const filter = { _id: cid };
             const update = { $push: { products: { id_prod: pid, quantity: quantity } } };
             const options = { new: true };
             const updatedCart = await cartService.findOneAndUpdate(filter, update, options);
-            console.log(updatedCart);
             res.status(200).send(updatedCart);
         }
     } catch (error) {
-        res.status(500).send("Error: Cart ID o Product ID no existen\n\n" + error);
+        next(error);
     }
 };
 
@@ -70,7 +70,6 @@ export const deleteProductOnCart = async (req, res) => {
     try {
         const cid = req.params.cid;
         const pid = req.params.pid;
-        //find cart and delete product
         const filter = { _id: cid };
         const update = { $pull: { products: { id_prod: pid } } };
         const options = { new: true };
@@ -115,7 +114,6 @@ export const updateProductQuantityOnCart = async (req, res) => {
     const pid = req.params.pid;
     const { quantity } = req.body //Consulto el dato quantity enviado por postman
     try {
-        //find cart and product and update quantity
         const filter = { _id: cid, "products.id_prod": pid }
         const update = { $set: { "products.$.quantity": quantity } }
         const options = { new: true };
@@ -131,21 +129,18 @@ export const purchaseCart = async (req, res) => {
     const cid = req.params.cid;
     try {
         const cart = await cartService.findByIdAndPopulate(cid, 'products.id_prod');
-        //console.log(cart);
         const productsWithStock = [];
         const productsWithoutStock = [];
         let purchaseTotal = 0;
         
-        //check if products have enough stock
         await asyncForEach(cart.products, async (cartProduct) => {
             const pid = cartProduct.id_prod._id;
             const product = await productService.findById(pid);
 
             if (product.stock >= cartProduct.quantity) {
-                //Se agrega producto al array de productos con stock
+                
                 productsWithStock.push(cartProduct)
 
-                //se suma el precio del producto al total de la compra
                 purchaseTotal += product.price * cartProduct.quantity;
 
                 //se elimina el producto del carrito
@@ -175,7 +170,7 @@ export const purchaseCart = async (req, res) => {
             });
             if (productsWithoutStock.length > 0) {
                 await sendMail(
-                    req.user.email,
+                    req.user.email, 
                     `Confirmacion de compra #${newTicket.code}`, 
                     "Compra efectuada exitosamente", 
                     `<h1>Hemos confirmado tu compra</h1>
@@ -186,8 +181,7 @@ export const purchaseCart = async (req, res) => {
                     </ul>
                     <h3>Algunos productos no tenian stock suficiente para realizar la compra, por lo que no se agregaron al ticket</h3>
                     <h3>Gracias por tu compra</h3>`, 
-                    null
-                )
+                    null);
                 res.status(200).json({ message: "Algunos productos no tienen stock suficiente para realizar la compra", ticket: newTicket, productsWithoutStock: productsWithoutStock });
             } else {
                 await sendMail(

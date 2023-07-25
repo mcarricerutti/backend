@@ -1,4 +1,5 @@
 import { productsMongo } from '../persistencia/DAOs/mongoDao/productsMongo.js';
+import { generateProduct } from '../utils/faker.js';
 
 class ProductService {
     async findAll() {
@@ -60,6 +61,18 @@ class ProductService {
     async paginate(filter, options) {
         try {
             return await productsMongo.paginate(filter, options);
+        } catch (error) {
+            return error;
+        }
+    }
+    async mockProducts(quantity) {
+        try {
+            const products = [];
+            for (let i = 0; i < quantity; i++) {
+                const product = generateProduct();
+                products.push(product);
+            }
+            return products;
         } catch (error) {
             return error;
         }

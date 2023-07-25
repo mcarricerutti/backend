@@ -22,7 +22,7 @@ sessionRouter.get('/failregister', failregister);
 sessionRouter.post('/trylogin',passport.authenticate('login',{failureRedirect:'faillogin'}), tryLogin);
 sessionRouter.get('/faillogin', faillogin);
 
-// github
+// Google
 sessionRouter.get('/google', passport.authenticate('google',{scope:['email','profile']}),async (req,res)=>{});
 sessionRouter.get('/googlecallback', 
     passport.authenticate('google',{failureRedirect:'/faillogin'}),
@@ -31,7 +31,7 @@ sessionRouter.get('/googlecallback',
     res.redirect('../products');
 });
 
-// Google
+// github
 sessionRouter.get('/github', passport.authenticate('github',{scope:['user:email']}),async (req,res)=>{});
 
 sessionRouter.get('/githubcallback', 

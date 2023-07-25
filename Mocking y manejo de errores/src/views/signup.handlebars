@@ -1,0 +1,98 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <div class="d-flex">
+        <button class="btn btn-outline-success" onclick="location.href='/'">Login</button>
+    </div>
+  </div>
+</nav>
+
+
+<div class="form-signin container d-flex justify-content-center" style="max-width:450px; height:100vh">
+    <form method="post" action="/api/sessions/signup" class="register-form align-self-center border rounded-3 p-4 w-100" >
+        <br/>
+        <h1 class="h3 mb-3 fw-normal">Registro</h1>
+        <div class="form-floating mb-2 rounded-top">
+            <label for="first_name" class="form-label">First Name: </label>
+            <input
+                class="form-control"
+                type="text"
+                name="first_name"
+                id="first_name"
+                placeholder="First Name"
+                required
+            />
+        </div>
+        <div class="form-floating mb-2">
+            <label for="last_name">Last Name: </label>
+            <input
+                class="form-control"
+                type="text"
+                name="last_name"
+                id="last_name"
+                placeholder="Last Name"
+                required
+            />
+        </div>
+        <div class="form-floating mb-2">
+           <label for="email">E-mail:</label>
+            <input
+                class="form-control"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
+                required
+            />
+        </div>
+        <div class="form-floating mb-2">
+             <div class="mb-3">Gender
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    id="Male"
+                    name="gender"
+                    value="Male"
+                    checked
+                />
+                <label class="form-check-label" for="Male">Male</label>
+            </div>
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    id="Female"
+                    name="gender"
+                    value="Female"
+                />
+                <label class="form-check-label" for="Female">Female</label>
+            </div>
+        </div>
+        </div>
+        <div class="form-floating mb-2">
+            <label for="age">Age: </label>
+            <input
+                class="form-control"
+                type="number"
+                name="age"
+                id="age"
+                placeholder="Age"
+                required
+            />
+        </div>        
+        <div class="form-floating mb-2">
+           <label for="password">Password: </label>
+            <input
+                class="form-control"
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Password"
+                required
+            />
+        </div>
+        <br/>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Registrate</button>
+        <p class="mt-5 mb-3 text-body-secondary">© Tienda</p>
+    </form>
+</div>

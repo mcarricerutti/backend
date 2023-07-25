@@ -1,5 +1,6 @@
 import { usersMongo } from '../persistencia/DAOs/mongoDao/usersMongo.js';
 import { createHash, validatePassword } from '../utils/bcript.js';
+import { generateUser } from '../utils/faker.js';
 
 class UserService {
     async findAll() {
@@ -42,6 +43,19 @@ class UserService {
     async delete(id) {
         try {
             return await usersMongo.delete(id);
+        } catch (error) {
+            return error;
+        }
+    }
+    async mockUsers(quantity) {
+        try {
+            const users = [];
+            for (let i = 0; i < quantity; i++) {
+                const user = generateUser();
+                console.log(user);
+                users.push(user);
+            }
+            return users;
         } catch (error) {
             return error;
         }

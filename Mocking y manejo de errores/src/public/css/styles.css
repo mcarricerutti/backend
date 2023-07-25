@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: rgb(230, 230, 230);
+    margin:2rem;
+    font-size: 0.875rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.mensajes {
+    border: 1px solid black; 
+    padding: 1rem 2rem; 
+    border-radius: 5px;
+    height: 50vh;
+    overflow-x:auto;
+    overflow-y: scroll;
+}

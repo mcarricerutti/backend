@@ -1,0 +1,94 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="margin-bottom:4%">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/cart">Cart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/chat">Chat</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-flex">
+      <button class="btn btn-outline-success" onclick="location.href='/api/sessions/logout'">Logout</button>
+    </div>
+  </div>
+</nav>
+
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="card mb-4">
+      <div class="card-body text-center">
+        <img
+          src="https://res.cloudinary.com/dpruqtqw2/image/upload/v1687525733/Captura_de_pantalla__345_-removebg-preview_xag2zn.png"
+          alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+        <h5 class="my-3">{{first_name}} {{last_name}}</h5>
+        <div class="d-flex justify-content-center mb-2">
+          <button type="button" class="btn btn-primary">Follow</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0">Nombre</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{first_name}} </p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0">Apellido</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{last_name}} </p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0">Edad</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{age}} </p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0">Rol</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{role}} </p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0">Género</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{gender}} </p>
+          </div>
+        </div>
+      </div>
+  </div>

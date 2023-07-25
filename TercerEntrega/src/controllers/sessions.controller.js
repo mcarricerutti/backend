@@ -1,6 +1,5 @@
-import userService from '../services/user.service.js';
 import CurrentUserDTO from '../persistencia/DTOs/currentUserDTO.js';
-import sendMail from '../utils/nodemailer.js'
+import sendMail from '../utils/nodemailer.js';
 
 
 export const renderRegister = async (req, res) => {
@@ -10,20 +9,18 @@ export const renderRegister = async (req, res) => {
 export const tryRegister = async (req, res) => {
     try {
         if (!req.user) {
-            return res.status(401).render('errors', 'usuario no creado');
+            res.status(401).render('errors', 'usuario no creado');
         }
-        
-        const sentEmail=await sendMail(req.user.email, 'Registro exitoso', "Bienvenido a Teclam", "<h1>Bienvenido a Teclam</h1>", null)
+        //Registro correcto, enviamos email y el usuario
+        const sentEmail=await sendMail(req.user.email, "Registro exitoso", "Bienvenido a TECLAM", "<h1>Bienvenido a TECLAM</h1>", null);
         console.log("Message sent: %s", sentEmail.messageId);
         res.status(200).send({ status: "success", payload: req.user });
-        // res.status(200).redirect('/api/sessions/login')
     } catch (error) {
         res.status(401).render('errors', { status: "error", message: "Error de Registro" });
     }
 }
 
 export const failregister = async (req, res) => {
-    console.log(req);
     res.status(500).render('errors', { status: "error", message: "Error de Registro" });
 }
 
@@ -58,11 +55,12 @@ export const tryLogin = async (req, res) => {
             role: req.user.role,
             cart: req.user.cart
         }
-        res.status(200).redirect('/api/products');
+        res.status(200).redirect(303,'/api/products');
     } catch (error) {
         res.status(401).render('errors', { status: "error", message: "Login Error" });
     }
 }
+
 export const faillogin = async (req, res) => {
     res.status(500).render('errors', { status: "error", message: "Credenciales Incorrectas" });
 }
