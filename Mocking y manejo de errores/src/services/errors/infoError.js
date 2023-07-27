@@ -1,21 +1,13 @@
-export const generateUserErrorInfo = (user)=>{
-    return `Uno o mas parametros incompletos.
-    Lista de parametros requeridos:
-    * first_name: debe ser string, se recibió ${user.first_name}
-    * last_name: debe ser string, se recibió ${user.last_name}
-    * age: debe ser number, se recibió ${user.age}
-    * email: debe ser string, se recibió ${user.email}
-    * password: debe ser string, se recibió ${user.password}`
-}
-
-export const generateProductErrorInfo = (product)=>{
-    return `Uno o mas parametros incompletos.
-    Lista de parametros requeridos:
-    * title: debe ser string, se recibió ${product.title}
-    * description: debe ser string, se recibió ${product.description}
-    * code: debe ser string, se recibió ${product.code}
-    * price: debe ser number, se recibió ${product.price}
-    * stock: debe ser number, se recibió ${product.stock}
-    * status: debe ser boolean, se recibió ${product.status}
-    * category: debe ser string, se recibió ${product.category}`
+// esto es el cause
+export const generateProductErrorInfo = (prod) => {
+    return `One or more properties were incomplete or not valid.
+    List of required properties:
+    * title : needs to be a String, received ${typeof prod.title},
+    * description : needs to be a String, received ${typeof prod.description},
+    * code : needs to be a String, received ${typeof prod.code},
+    * price : needs to be a Number, received ${typeof prod.price},
+    * category : needs to be a String, received ${typeof prod.category},
+    * stock : needs to be a Number, received ${typeof prod.stock},
+    * thumbnails : needs to be an Array object, received ${typeof prod.thumbnails}
+    `
 }

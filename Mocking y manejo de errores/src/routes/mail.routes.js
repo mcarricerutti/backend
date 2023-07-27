@@ -7,14 +7,14 @@ const router = new Router()
 router.get('/', async(req,res) => {
     try {
         await transporter.sendMail({
-            to:'tincho.becchio@gmail.com',
+            to:'martinacarri345@gmail.com',
             subject:'Correo de prueba',
             text: 'Correo de prueba',
             html:`
             <div>
                 <h1>Esto es un test</h1>
             </div>`,
-            attachments: [{path: __dirname+'/public/imgs/auth.png'}]
+            attachments: [{path: __dirname+'/public/img/avatar.png'}]
         })
 
         res.status(200).send('Mail sent')

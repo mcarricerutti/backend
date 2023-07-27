@@ -15,9 +15,13 @@ import MessageManager from "./controllers/MessageManager.js";
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import MongoStorage from 'connect-mongo' 
-import errorHandler from './middlewares/errors.js';
 import passport from 'passport'
 import initializePassport from './config/passport.js'
+
+import errorHandler from "./middlewares/errors.js";
+import CustomError from "./services/errors/CustomError.js";
+import EErrors from "./services/errors/enumError.js";
+
 
 const app = express()
 const PORT = config.port || 8080
@@ -59,6 +63,17 @@ app.use('/api/sessions', sessionsRouter)
 app.use('/', viewsRouter)
 app.use('/api/mail', mailRouter)
 
+app.get('*', (req,res,next) => {
+    const error = CustomError.createError({
+      name: "Invalid Route",
+      cause: "The route is not a valid route",
+      message: "The route is not defined",
+      code: EErrors.ROUTING_ERROR
+    })
+    next(error)
+});
+  
+// Manejo de errores
 app.use(errorHandler);
 
 const io = new Server(httpServer, { cors: { origin: '*'}})

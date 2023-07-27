@@ -43,7 +43,7 @@ export const addProduct = async (req,res,next) => {
                 name: "Product creation error",
                 cause: generateProductErrorInfo(req.body),
                 message: "Error trying to create a new product",
-                code: EErrors.INVALID_TYPE_ERROR,
+                code: EErrors.INVALID_TYPES_ERROR,
             })
         }
 
@@ -58,7 +58,7 @@ export const addProduct = async (req,res,next) => {
         return res.status(200).json({message: `El producto se ha creado correctamente.`, newProd})
 
     } catch (error) {
-        res.send(error);
+        next(error);
     }
 }
 
