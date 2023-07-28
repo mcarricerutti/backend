@@ -1,0 +1,36 @@
+<div>
+    <button onclick="window.location.href='/views/profile'">Perfil</button>
+    <button onclick="window.location.href='/views/chat'">Chat</button>
+    <button onclick="window.location.href='/api/products/'">Productos</button>
+    <button onclick="window.location.href='/views/agregar'">Cargar Productos</button>
+    <button onclick="window.location.href='/api/carts/'">Carrito</button>
+</div>
+<br />
+<button onclick="window.location.href='/views/home'">HOME</button>
+<div>
+    <h2 style="color: white;">Chat</h2>
+</div>
+
+<div class="message" style="color: white;">
+  <p id="chat"></p>
+</div>
+
+<div class="formInputs">
+  <form action="/message/mensaje" method="post" id="formulario">
+    <input
+      type="text"
+      name="mensaje"
+      id="mensaje"
+      placeholder="Escribir mensaje aquí..."
+    />
+    <input type="submit" value="ENVIAR" id="button" />
+  </form>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/toastify-js"
+></script>
+<script src="/js/index.js"></script>

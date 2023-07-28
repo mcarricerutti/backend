@@ -9,7 +9,7 @@ sessionsRouter.post(
   "/signup",
   passport.authenticate("register", {
     failureRedirect: "/errorSignup",
-    successRedirect: "/products",
+    successRedirect: "/",
   })
 );
 

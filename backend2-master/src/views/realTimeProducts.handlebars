@@ -1,0 +1,51 @@
+<div>
+    <button onclick="window.location.href='/views/profile'">Perfil</button>
+    <button onclick="window.location.href='/views/chat'">Chat</button>
+    <button onclick="window.location.href='/api/products/'">Productos</button>
+    <button onclick="window.location.href='/views/agregar'">Cargar Productos</button>
+    <button onclick="window.location.href='/api/carts/'">Carrito</button>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+    <h4 style="color: white; margin-top:10%;margin-left:35%">AGREGAR PRODUCTO</h4>
+    <form id="formulario" action="/api/products" method="post" style="width: 40%;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: rgba(195, 192, 219, 0.329);
+    border-radius: 0.25rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    padding:2%;margin-top:3%">
+        Title:<input style="margin-bottom:1%" class="form" type="text" name="title" id="title" required />
+        <br />
+        Description:
+        <input style="margin-bottom:1%" class="form" type="text" name="description" id="description" required />
+        <br />
+        Code:
+        <input style="margin-bottom:1%" class="form" type="number" name="code" id="code" required />
+        <br />
+        Precio:
+        <input style="margin-bottom:1%" class="form" type="number" name="precio" id="precio" required />
+        <br />
+        Status:
+        <input style="margin-bottom:1%" class="form" type="text" name="status" id="status" />
+        <br />
+        Stock:
+        <input style="margin-bottom:1%"type="number" class="form" name="stock" id="stock">
+        <br />
+        Category:
+        <input style="margin-bottom:1%" class="form" type="text" name="category" id="category" required />
+        <br />
+        Thumbnails:
+        <input style="margin-bottom:1%" class="form" type="text" name="thumbnails" id="thumbnails" />
+        <br />
+        <input type="submit" value="AGREGAR" class="enviar" style="background-color: #ffffff;
+    margin-top: 3%;margin-left:30%"/>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/index.js"></script>

@@ -17,10 +17,11 @@ import session from 'express-session'
 import MongoStorage from 'connect-mongo' 
 import passport from 'passport'
 import initializePassport from './config/passport.js'
-
 import errorHandler from "./middlewares/errors.js";
 import CustomError from "./services/errors/CustomError.js";
 import EErrors from "./services/errors/enumError.js";
+import compression from 'express-compression';
+import { addLogguer } from './utils/logger.js';
 
 
 const app = express()
@@ -50,6 +51,8 @@ app.use(session({
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(compression({brotli:{enabled: true, zlib: {}},}));//Comprimir response con Brotli
+app.use(addLogguer);//Agrego logger a request
 
 
 app.engine('handlebars', engine())
@@ -72,6 +75,17 @@ app.get('*', (req,res,next) => {
     })
     next(error)
 });
+
+app.use('/loggerTest', (req, res) => {
+
+    req.logger.debug("Debug");
+    req.logger.http("Http");
+    req.logger.info("Info");
+    req.logger.warning("Warning");
+    req.logger.error("Error");
+    req.logger.fatal("Fatal");
+    res.send("Logger test");
+  });//Ruta para evitar error 404 en rutas inexistentes
   
 // Manejo de errores
 app.use(errorHandler);

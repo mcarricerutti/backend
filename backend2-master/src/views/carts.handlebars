@@ -1,0 +1,25 @@
+<h1>Carrito</h1>
+<br>
+<h2>Cart ID: {{cid}}</h2>
+<br>
+<button onclick="window.location.href='/api/products/'">Productos</button>
+<br>
+<br>
+<ul id="docs">
+    {{#each cart.products}}
+    <li>
+        <p><strong>id:</strong> {{this.id_prod._id}}</p>
+        <p><strong>title:</strong> {{this.id_prod.title}}</p>
+        <p><strong>description:</strong>{{this.id_prod.description}}</p>
+        <p><strong>thumbnails:</strong> {{this.id_prod.thumbnails}}</p>
+        <p><strong>price:</strong> {{this.id_prod.price}}</p>
+        <p><strong>code:</strong> {{this.id_prod.code}}</p>
+        <p><strong>stock:</strong> {{this.id_prod.stock}}</p>
+        <p><strong>category:</strong> {{this.id_prod.category}}</p>
+        <br>
+        <p><strong>quantity:</strong> {{this.quantity}}</p>
+        <br>
+        <button class="deleteButton" data-id={{this.id_prod._id}}>Borrar</button>
+    </li>
+    {{/each}}
+</ul>

@@ -1,4 +1,3 @@
-import Cart from '../persistencia/models/Cart.js';
 import { findAllCarts, createNewCart, getProducts, addProduct, deleteProduct, updateArrayProds, updateProductQuantity, resetCartProds } from '../services/cart.service.js';
 import {createTicket} from '../services/ticket.service.js'
 import { __dirname } from '../utils/path.js';
@@ -9,7 +8,8 @@ export const getCarts = async (req,res,next) => {
         const carts = await findAllCarts()
         res.send(carts)
     } catch (error) {
-        res.send(error)
+        res.logguer.error("Error en getCarts");
+        res.status(500).send("ERROR: " + error);
     }
 }
 
@@ -19,7 +19,8 @@ export const createCart = async (req,res,next) => {
         await createNewCart()
         res.send('Carrito creado exitosamente.')
     } catch (error) {
-        res.send(error)
+        res.logguer.error("Error en createCart")
+        res.status(500).send("ERROR: "+ error);
     }
 }
 
@@ -37,7 +38,8 @@ export const getCartProducts = async (req,res,next) => {
         return res.status(200).json({message: `Cart ${cid} founded`, payload: products})
 
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.logguer.error("Error en getCartProducts");
+        res.status(500).send("ERROR: " + error);
     }
 }
 
@@ -62,7 +64,8 @@ export const addCartProduct = async (req,res) => {
         }
         
     } catch (error) {
-        res.send(error);
+        res.logguer.error("Error en addCartProduct");
+        res.status(500).send("Error: " + error);
     }
 }
 
@@ -74,7 +77,8 @@ export const deleteCartProduct = async (req,res,next) => {
         return res.status(200).json({message: 'Product deleted from cart', cart: carrito})
 
     } catch (error) {
-        return res.send(error);
+        res.logguer.error("Error en deleteCartProduct");
+        res.status(500).send("Error: Cart ID no existe\n\n" + error);
     }
 }
 
@@ -89,7 +93,8 @@ export const updateArrayProducts = async (req,res,next) => {
         return res.status(200).json({message: 'Cart updated', cart: carrito})
 
     } catch (error) {
-        return res.status(400).json({message: error});
+        res.logguer.error("Error en updateArrayProducts");
+        res.status(500).send("Error: Cart ID o formato del arreglo products incorrectos \n\n" + error);
     }
 }
 
@@ -104,7 +109,8 @@ export const updateCartProductQuantity = async (req,res,next) => {
         return res.status(200).json({message: 'Quantity updated', cart: carrito})
 
     } catch (error) {
-        return res.status(400).json({message: error});
+        res.logguer.error("Error en updateCartProductQuantity");
+        res.status(500).send("Error: Cart ID o Product ID o quantity Incorrectos \n\n" + error);
     }
 }
 
@@ -117,7 +123,8 @@ export const resetCart = async (req,res,next) => {
         return res.status(200).json({message: 'Cart reseted', cart: carrito})
 
     } catch (error) {
-        return res.status(400).json({message: error});
+        res.logguer.error("Error en resetCart");
+        res.status(500).send("Error: Cart ID no existe\n\n" + error);
     }
 }
 
@@ -141,12 +148,10 @@ export const purchase = async (req,res,next) => {
             .then(res => console.log(res))
             .catch(err => console.log(err))
         }
-
-
-
         return res.status(200).json({'order':newTicket})
 
     } catch (error) {
-        return res.status(400).json({message: error});
+        res.logguer.error("Error en purchaseCart");
+        res.status(500).send(error);
     }
 }

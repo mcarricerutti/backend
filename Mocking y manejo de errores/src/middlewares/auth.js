@@ -11,9 +11,11 @@ export const auth = (req,res,next) => {
 export const authUser = (req,res,next) => {
     try {
         if(!req.user) { 
+            req.logger.error("Usuario no logueado");
             return res.redirect('/')
         }
         if (req.user.role !== "user") { 
+            req.logger.error("Usuario no autorizado");
             CustomError.createError({
                 name: "Unathorized",
                 cause: "Not allowed",
@@ -30,9 +32,11 @@ export const authUser = (req,res,next) => {
 export const authAdmin = (req,res,next) => {
     try {
         if(!req.user) { 
+            req.logger.error("Usuario no logueado");
             return res.redirect('/')
         }
         if (req.user.role !== "admin") { 
+            req.logger.error("Usuario no autorizado");
             CustomError.createError({
                 name: "Unathorized",
                 cause: "Not allowed",

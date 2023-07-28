@@ -13,7 +13,8 @@ export const getProducts = async (req,res,next) => {
 
         res.status(200).json(productos)
     } catch (error) {
-        res.status(400).json({error});
+        res.logguer.error("Error en getProducts");
+        res.status(500).send("ERROR: " + error);
     }
 }
 
@@ -30,7 +31,8 @@ export const getProductById = async (req,res,next) => {
         return res.status(200).json(producto)
 
     } catch (error) {
-        return res.status(400).json(error);
+        res.logguer.error("Error en getProductById");
+        res.status(500).send(error.message);
     }
 }
 
@@ -58,6 +60,7 @@ export const addProduct = async (req,res,next) => {
         return res.status(200).json({message: `El producto se ha creado correctamente.`, newProd})
 
     } catch (error) {
+        res.logguer.error("Error en addProduct");
         next(error);
     }
 }
@@ -75,7 +78,8 @@ export const updateProduct = async (req,res,next) => {
         return res.status(200).json({message:'Producto actualizado correctamente'})
 
     } catch (error) {
-        res.status(400).json(error);
+        res.logguer.error("Error en updateProduct");
+        res.status(500).send("ERROR: " + error);
     }
 }
 
@@ -91,6 +95,7 @@ export const deleteProduct = async (req,res,next) => {
         return res.status(400).json({error: `El id ${pid} no es válido.`}) 
         
     } catch (error) {
-        return res.status(400).json({error})
+        res.logguer.error("Error en deleteProduct");
+        res.status(500).send("ERROR: " + error);
     }
 }

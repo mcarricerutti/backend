@@ -12,18 +12,18 @@
         <br/>
         <h1 class="h3 mb-3 fw-normal">Registro</h1>
         <div class="form-floating mb-2 rounded-top">
-            <label for="first_name" class="form-label">First Name: </label>
             <input
                 class="form-control"
                 type="text"
                 name="first_name"
                 id="first_name"
+                aria-placeholder="First Name"
                 placeholder="First Name"
                 required
             />
+            <label>First Name</label>
         </div>
         <div class="form-floating mb-2">
-            <label for="last_name">Last Name: </label>
             <input
                 class="form-control"
                 type="text"
@@ -32,9 +32,9 @@
                 placeholder="Last Name"
                 required
             />
+            <label>Last Name</label>
         </div>
         <div class="form-floating mb-2">
-           <label for="email">E-mail:</label>
             <input
                 class="form-control"
                 type="email"
@@ -43,9 +43,10 @@
                 placeholder="Email"
                 required
             />
+            <label>Email</label>
         </div>
         <div class="form-floating mb-2">
-             <div class="mb-3">Gender
+            <div class="mb-3" >Gender
             <div class="form-check">
                 <input
                     class="form-check-input"
@@ -70,7 +71,6 @@
         </div>
         </div>
         <div class="form-floating mb-2">
-            <label for="age">Age: </label>
             <input
                 class="form-control"
                 type="number"
@@ -79,9 +79,9 @@
                 placeholder="Age"
                 required
             />
+            <label>Age</label>
         </div>        
         <div class="form-floating mb-2">
-           <label for="password">Password: </label>
             <input
                 class="form-control"
                 type="password"
@@ -90,6 +90,7 @@
                 placeholder="Password"
                 required
             />
+            <label>Password</label>
         </div>
         <br/>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Registrate</button>
