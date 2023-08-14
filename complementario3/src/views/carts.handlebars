@@ -1,0 +1,58 @@
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" onclick="window.location.href='/api/products/'">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="window.location.href='/api/sessions/profile'">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="window.location.href='/api/carts/{{user.cart.id_cart}}'">Carrito</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="window.location.href='/chat/'">Chat</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="window.location.href='/api/products/realtimeproducts'">Cargar
+              productos</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="d-flex" style="margin-right: 3%;">
+        <button class="btn btn-outline-success" onclick="window.location.href='/api/sessions/logout'">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+<h1>Carrito</h1>
+<br>
+<h2>Cart ID: {{cart._id}}</h2>
+<br>
+<ul id="docs">
+    {{#each cart.products}}
+    <li>
+        <p><strong>id:</strong> {{this.id_prod._id}}</p>
+        <p><strong>title:</strong> {{this.id_prod.title}}</p>
+        <p><strong>description:</strong>{{this.id_prod.description}}</p>
+        <p><strong>thumbnails:</strong> {{this.id_prod.thumbnails}}</p>
+        <p><strong>price:</strong> {{this.id_prod.price}}</p>
+        <p><strong>code:</strong> {{this.id_prod.code}}</p>
+        <p><strong>stock:</strong> {{this.id_prod.stock}}</p>
+        <p><strong>category:</strong> {{this.id_prod.category}}</p>
+        <br>
+        <p><strong>quantity:</strong> {{this.quantity}}</p>
+        <br>
+        <button class="deleteButton" data-id={{this.id_prod._id}}>Borrar</button>
+    {{/each}}
+</ul>
+<br>
+<button onclick="window.location.href='/api/carts/{{cart._id}}/purchase'">Comprar</button>
+

@@ -1,0 +1,104 @@
+<section>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" onclick="window.location.href='/api/products/'">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="window.location.href='/api/sessions/profile'">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="window.location.href='/api/carts/{{user.cart.id_cart}}'">Carrito</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="window.location.href='/chat/'">Chat</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="window.location.href='/api/products/realtimeproducts'">Cargar
+              productos</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="d-flex" style="margin-right: 3%;">
+        <button class="btn btn-outline-success" onclick="window.location.href='/api/sessions/logout'">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card mb-4">
+        <div class="card-body text-center">
+          <img
+            src="https://res.cloudinary.com/dpruqtqw2/image/upload/v1687525733/Captura_de_pantalla__345_-removebg-preview_xag2zn.png"
+            alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+          <h5 class="my-3">{{user.first_name}} {{user.last_name}}</h5>
+          <p class="text-muted mb-1">Full Stack Developer</p>
+          <div class="d-flex justify-content-center mb-2">
+            <button type="button" class="btn btn-primary">Follow</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="mb-0">Nombre</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0">{{user.first_name}} </p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="mb-0">Apellido</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0">{{user.last_name}} </p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="mb-0">Email</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0">{{user.email}} </p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="mb-0">Edad</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0">{{user.age}} </p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="mb-0">Rol</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0">{{user.role}} </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+</section>

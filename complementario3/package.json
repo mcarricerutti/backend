@@ -1,0 +1,37 @@
+{
+  "type": "module",
+  "name": "entregas-coder",
+  "description": "Complementario3",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/app.js --mode production",
+    "dev": "nodemon src/app.js --mode development",
+    "debug": "node --inspect src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "bcrypt": "^5.1.0",
+    "commander": "^11.0.0",
+    "connect-mongo": "^5.0.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-compression": "^1.0.2",
+    "express-handlebars": "^7.0.7",
+    "mongoose": "^7.1.1",
+    "mongoose-paginate-v2": "^1.7.1",
+    "nodemailer": "^6.9.3",
+    "passport": "^0.6.0",
+    "passport-github2": "^0.1.12",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "socket.io": "^4.6.1",
+    "winston": "^3.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

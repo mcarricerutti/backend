@@ -28,6 +28,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    passwordModifiableUntil: {
+        type: Date,
+        default: Date.now,
+      },
     role: {
         type: String,
         default: "user"

@@ -6,6 +6,7 @@ import { __dirname, __filename } from './utils/path.js';
 import './config/dbconfig.js'
 import productRouter from './routes/product.routes.js'
 import cartRouter from './routes/cart.routes.js'
+import userRouter from "./routes/user.routes.js"
 import chatRouter from './routes/chat.routes.js'
 import sessionsRouter from './routes/sessions.routes.js'
 import mailRouter from './routes/mail.routes.js'
@@ -62,6 +63,7 @@ app.set('views', path.resolve(__dirname, './views'))
 app.use('/api/products', productRouter)
 app.use('/api/carts', cartRouter)
 app.use('/chat', chatRouter)
+app.use('/api/user', userRouter)
 app.use('/api/sessions', sessionsRouter)
 app.use('/', viewsRouter)
 app.use('/api/mail', mailRouter)

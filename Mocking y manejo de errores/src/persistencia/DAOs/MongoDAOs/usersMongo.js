@@ -27,6 +27,15 @@ class UsersManager {
             return error
         }
     }
+
+    async setPasswordModifiable(id, date) {
+        try {
+            const user= await userModel.findByIdAndUpdate(id, {passwordModifiableUntil:date}, {new: true});
+            return user;
+        } catch (error) {
+            return error;
+        }
+    }
 }
 
 export const usersManager = new UsersManager()

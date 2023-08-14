@@ -18,27 +18,30 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Chat</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/agregarProd">Cargar productos</a>
+        </li>
       </ul>
     </div>
 
-    <div class="d-flex">
+    <div class="d-flex" style="margin-right: 3%;">
         <button class="btn btn-outline-success" onclick="location.href='/api/sessions/logout'">Logout</button>
     </div>
   </div>
 </nav>
 
 <div class="container">
-    <h1 class="mt-4">Chat comunitario</h1>
+    <h1 class="mt-4" style="color: white;">Chat</h1>
 
     <div class="row">
         <div class="col-md-8">
 
             <div class="mt-4 mensajes">
-                <p class="mensaje" id="messageLogs"></p>
+                <p style="color: white;" class="mensaje" id="messageLogs"></p>
             </div>
 
             <div class="mt-4">
-                <label for="chatBox" class="form-label">Nuevo mensaje</label>
+                <label for="chatBox" class="form-label" style="color: white;">Nuevo mensaje</label>
                 <input class="form-control" type="text" id="chatBox" placeholder="Ingrese su mensaje y presione enter para enviar">
             </div>
         </div>

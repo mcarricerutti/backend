@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 body{
     background-color: rgb(230, 230, 230);
@@ -9,6 +11,7 @@ body{
     font-size: 0.875rem;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
 .mensajes {
     border: 1px solid black; 
     padding: 1rem 2rem; 

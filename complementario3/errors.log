@@ -1,0 +1,69 @@
+error: Error
+fatal: Fatal
+error: Error
+fatal: Fatal
+error: Error
+fatal: Fatal
+error: Error
+fatal: Fatal
+error: Error
+fatal: Fatal
+error: Error en resetPasswordEmail
+error: Error en resetPassword
+error: Error en resetPassword
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: undefined
+error: Error en setPasswordModifiable
+error: passwordModifiableUntil: Wed Aug 09 2023 23:07:43 GMT-0400 (hora estándar de Chile)
+error: passwordModifiableUntil: Wed Aug 09 2023 23:11:22 GMT-0400 (hora estándar de Chile)
+error: El link ha caducado {"status":"error"}
+error: El link ha caducado {"status":"error"}
+error: undefined {"code":"ERR_HTTP_HEADERS_SENT"}
+error: El link ha caducado {"status":"error"}
+error: El link ha caducado {"status":"error"}
+error: El link ha caducado {"status":"error"}
+error: El link ha caducado {"status":"error"}
+error: El link ha caducado {"status":"error"}
+error: El link ha caducado {"status":"error"}
+error: El link ha caducado {"status":"error"}
+error: El link ha caducado {"status":"error"}
+error: El link ha caducado {"status":"error"}
+error: undefined {"code":"ERR_HTTP_HEADERS_SENT"}
+error: Error enviando email de actualizacion de contraseña
+error: Error enviando email de actualizacion de contraseña
+error: Error enviando email de actualizacion de contraseña
+error: Error enviando email de actualizacion de contraseña
+error: Error en setPasswordNotModifiable
+error: undefined {"code":"ERR_HTTP_HEADERS_SENT"}
+error: El link ha caducado {"status":"error"}
+error: Usuario no autorizado
+error: Usuario no autorizado
+error: Error en addProductOnCart
+error: Usuario no logueado
+error: Error en addProductOnCart
+error: Error en addProductOnCart
+error: Usuario no logueado
+error: Error en addProductOnCart
+error: Error en addProductOnCart
+error: Error en addProductOnCart
+error: Error en addProductOnCart
+error: Error en addProductOnCart
+error: Error en addProductOnCart
+error: Error en addProductOnCart
+error: Usuario no autorizado
+error: Usuario no autorizado
+error: Usuario no logueado
+error: Usuario no logueado
+error: Error en deleteProduct
+error: Error en purchaseCart
+error: undefined {"code":"EAUTH","command":"API"}
+error: undefined {"code":"EAUTH","command":"API"}
+error: undefined {"code":"EAUTH","command":"API"}
+error: undefined {"code":"EAUTH","command":"API"}
+error: undefined {"code":"EAUTH","command":"API"}

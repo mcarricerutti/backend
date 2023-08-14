@@ -5,4 +5,10 @@ fatal: Fatal
 error: Error
 fatal: Fatal
 error: Error
-fatal: Fatal
+fatal: Fatalerror: Usuario no autorizado
+error: Error en resetPasswordEmail
+error: Error en resetPasswordEmail
+error: Usuario no autorizado
+error: Usuario no autorizado
+error: Usuario no autorizado
+error: Error en resetPasswordEmail

@@ -8,3 +8,26 @@ export const transporter = nodemailer.createTransport({
         pass: config.gmail_password
     }
 })
+
+const sendMail = async (to, subject, text, html, attachments) => {
+    try {
+        const info= await transporter.sendMail({
+            from: `"TECLAM" <${email}>`,
+            to: to,
+            subject: subject,
+            text: text,
+            html: html,
+            attachments: attachments
+        });
+        devLogger.info("Message sent: " + info.messageId);
+        return true;
+
+    } catch (error) {
+        devLogger.error(error);
+        return false;
+    }
+};
+
+export default sendMail;
+
+

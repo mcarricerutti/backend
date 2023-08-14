@@ -1,6 +1,6 @@
 import passport from 'passport'
 import config from './config.js'
-import {findByEmail, findById, createUser} from '../services/users.service.js'
+import userService from '../services/users.service.js'
 import { validatePassword } from '../utils/bcrypt.js'
 import { Strategy as LocalStrategy} from 'passport-local'
 import { Strategy as GitHubStrategy} from 'passport-github2'
@@ -13,12 +13,12 @@ const initializePassport = () => {
         async (req, username, password, done) => {
             const {email} = req.body
             try {
-                const user = await findByEmail(email)
+                const user = await userService.findByEmail(email)
                 if(user) {
                     return done(null, false) // Usuario ya registrado
                 }
                 // Llama al servicio que lo crea
-                const newUser = await createUser(req.body)
+                const newUser = await userService.createUser(req.body)
                 
                 return done(null, newUser)
 
@@ -36,7 +36,7 @@ const initializePassport = () => {
 
         // Eliminar la session del user
     passport.deserializeUser(async (id, done) => {
-        const user = await findById(id)
+        const user = await userService.findById(id)
         done(null,user)
     })
 
@@ -45,7 +45,7 @@ const initializePassport = () => {
         { usernameField: 'email' }, 
         async (username, password, done) => {
             try {
-                const user = await findByEmail(username)
+                const user = await userService.findByEmail(username)
 
                 if(!user) { // No se encuentra el usuario
                     return done(null, false)
@@ -74,7 +74,7 @@ const initializePassport = () => {
       async (accessToken, refreshToken, profile, done) => {
         const {name,email} = profile._json
         try {
-            const userDB = await findByEmail(email)
+            const userDB = await userService.findByEmail(email)
     
             if(userDB){
                 return done(null,userDB)
@@ -88,7 +88,7 @@ const initializePassport = () => {
                 method: 'github'
             }
 
-            const newUserDB = await createUser(user)
+            const newUserDB = await userService.createUser(user)
             done(null,newUserDB);
     
         } catch (error) {

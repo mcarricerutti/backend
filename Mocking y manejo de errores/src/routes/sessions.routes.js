@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { destroySession, current } from "../controllers/session.controller.js";
+import { destroySession, current, resetPasswordEmail} from "../controllers/session.controller.js";
 import {auth} from '../middlewares/auth.js'
 import passport from "passport";
 
 const sessionsRouter = new Router();
+
+sessionsRouter.post('/resetpasswordemail', resetPasswordEmail);
 
 sessionsRouter.post(
   "/signup",
