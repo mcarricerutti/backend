@@ -28,12 +28,21 @@ class UsersManager {
         }
     }
 
-    async setPasswordModifiable(id, date) {
+    async updateOneByEmail(email, obj) {
         try {
-            const user= await userModel.findByIdAndUpdate(id, {passwordModifiableUntil:date}, {new: true});
-            return user;
+          const updatedUser = await userModel.findOneAndUpdate({email: email},obj )
+          return updatedUser
         } catch (error) {
-            return error;
+          return error
+        }
+    }
+    
+    async updateOneById(id, obj) {
+        try {
+          const updatedUser = await userModel.findOneAndUpdate({_id: id},obj )
+          return updatedUser
+        } catch (error) {
+          return error
         }
     }
 }

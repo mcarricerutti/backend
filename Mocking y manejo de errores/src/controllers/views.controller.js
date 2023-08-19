@@ -1,5 +1,6 @@
-import userService from "../services/users.service.js"
-import sendMail from "../utils/nodemailer.js"
+
+import jwt from 'jsonwebtoken'
+import { getAllProds, getAllProducts} from "../services/products.service.js"
 
 // Login '/'
 export const login = (req,res,next) => {
@@ -49,25 +50,26 @@ export const profile = (req,res,next) => {
 
 // Vista de productos
 export const products = async (req,res,next) => {
-    const user = req.user
-    const cid = `${user.cart}`
-    let products
-    await fetch('http://localhost:4000/api/products')
-    .then(res => res.json())
-    .then(data => {
-        products = data.docs
-    })
-    .catch(err => console.error(err))
-
-    if(products){products.forEach(prod => prod.cid = cid)}
-
-    return res.render('products', {
-        title: 'Productos',
-        first_name: user.first_name,
-        last_name: user.last_name,
-        products: products,
-        role: user.role
-    })
+    try{
+        const user = req.user
+        const cid = `${user.cart}`
+        
+        const products = await getAllProds()
+    
+        if(products){
+            products.forEach(prod => prod.cid = cid)
+        }
+    
+        return res.render('products', {
+            title: 'Productos',
+            first_name: user.first_name,
+            last_name: user.last_name,
+            products: products,
+            role: user.role
+        })
+    }catch(error){
+        console.log(error)
+    }
 }
 
 export const errorLogin = async (req,res,next) => {
@@ -86,7 +88,7 @@ export const errorSignUp = async (req, res, next) => {
 export const cart = async (req,res,next) => {
     const user = req.user
     const cid = `${user.cart}`
-    console.log(`Esto es ${cid}`)
+
     let products = await fetch(`http://localhost:4000/api/carts/${user.cart}`)
         .then(res => res.json())
         .then(data => data.payload)
@@ -100,61 +102,40 @@ export const cart = async (req,res,next) => {
     })
 }
 
-//Cambiar contraseña
-export const resetPasswordNewPass = async (req, res) => {
-    res.render('resetpasswordnewpass', {id: req.params.id})
+// Resetear contraseña
+export const resetPass = (req,res) => {
+    res.render('resetPass', {title: 'Reset Password'})
 }
 
-export const resetPassword = async (req, res) => {
-    try {
-        //get id from params
-        const id = req.params.id;
-        const user = await userService.findById(id);
-        if (!user) {
-            return res.status(400).send({ status: "error", message: "Email no registrado" });
-        }
-        if (user.passwordModifiableUntil < Date.now()) {
-            req.logger.error({ status: "error", message: "El link ha caducado" });
-            return res.render('resetpassword', { status: "error", message: "El link ha caducado" });
-        }
-        const newUser = await userService.resetPassword(user.email,req.body.password);//cambiamos la contraseña
-        await setPasswordNotModifiable(newUser);//ponemos la contraseña como no modificable
-        if (newUser instanceof Error) {
-            return res.render('resetpasswordnewpass', { id:user._id, message: newUser});
-        }
-        const sentEmail = await sendMail(newUser.email, "Contraseña actualizada", "Su contraseña de TECLAM ha sido actualizada correctamente", "<h1>Contraseña Actualizada</h1>", null);
-        if(!sentEmail){
-            req.logger.error("Error enviando email de actualizacion de contraseña");
-            return res.status(500).send({ status: "error", message: "Error enviando email de actualizacion de contraseña" });
-        }
-        req.logger.info("Email de actualizacion de contraseña enviado");
-        return res.status(200).send({ status: "success", message: "Contraseña actualizada" });
-    } catch (error) {
-        req.logger.error(error);
-        return res.status(500).send({ status: "error", message: "Error reseteando password" });
-    }
+// mail enviado
+export const resetPassMailSent = (req,res) => {
+    res.render('resetPassMail',{title: 'Reset Password', success: true})
+}
+// hubo error
+export const resetPassError = (req,res) => {
+    res.render('resetPassMail',{title: 'Reset Password'})
 }
 
-const setPasswordModifiable = async (req, res) => {
-    try {
-        const id = req.params.id;
-        //Se define una duracion fecha actual + 1 hora
-        const date = Date.now() + 3600000;
-        const user = await userService.setPasswordModifiable(id, date);
-        res.status(200).json({status:'success', payload: user});
-    } catch (error) {
-        req.logger.error("Error en setPasswordModifiable");
-        res.status(500).json({status:'error', payload: error});
-    }
-}
-
-export default setPasswordModifiable
-
-const setPasswordNotModifiable = async (user) => {
-    try {
-        const newUser = await userService.setPasswordNotModifiable(user);
-        return newUser;
-    } catch (error) {
-        return error
-    }
+// Nueva contraseña
+export const newPass = (req,res) => {
+    // - chequea que el jwt sea valido (que no haya expirado)
+    const token = req.params.token
+    let success = true
+    jwt.verify(token, 'password', (err,data) => {
+        // - si expiró renderiza el error y un boton que lo mande a la de resetpass (seteando el success en false)
+        if(err) {
+            req.logger.error({message:'Invalid token'})
+            success = false
+            return
+        } else {
+            // guardo el token en una cookie que expire igual que el token (no se si es necesario que expiren igual)
+            const tokenExpires = new Date(data.exp * 1000)  // paso a fecha la expiracion del token
+            const dif = tokenExpires - Date.now();  // Calculo la diferencia en tiempo
+            const cookieExp = new Date(Date.now() + dif)    // Establece la expiración de la cookie
+            res.cookie('reset', token, { expires: cookieExp, httpOnly: true });  // Creo la cookie con la expiracion deseada
+        }
+    })
+    
+    // - si es valido le renderiza un campo para introducir nueva contra  y otro para repetirla
+    return res.render('newPass',{title: 'Reset Password', success: success})
 }

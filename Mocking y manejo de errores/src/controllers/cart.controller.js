@@ -1,5 +1,6 @@
 import { findAllCarts, createNewCart, getProducts, addProduct, deleteProduct, updateArrayProds, updateProductQuantity, resetCartProds } from '../services/cart.service.js';
 import {createTicket} from '../services/ticket.service.js'
+import { getProd, getProdById } from '../services/products.service.js';
 import { __dirname } from '../utils/path.js';
 
 // Devuelve todos los carritos
@@ -20,7 +21,7 @@ export const createCart = async (req,res,next) => {
         res.send('Carrito creado exitosamente.')
     } catch (error) {
         res.logguer.error("Error en createCart")
-        res.status(500).send("ERROR: "+ error);
+        res.send(error)
     }
 }
 
@@ -48,6 +49,11 @@ export const addCartProduct = async (req,res) => {
     try {
         const {pid, cid} = req.params
         const quantity = req.body.quantity
+
+        const product = await getProdById(pid)
+        if(req.user.role === "premium" && product.owner === req.user.email){
+            return res.status(403).json({error: 'You are not allowed to add your own product to the cart'})
+        }
 
         if(quantity>0){
             

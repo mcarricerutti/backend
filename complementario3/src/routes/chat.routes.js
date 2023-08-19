@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { getChat } from "../controllers/chat.controller.js";
-import autorization from "../middlewares/autorization.js";
+import authz from "../middlewares/autorization.js";
 
-const chatRouter = Router(); //Router para manejo de rutas
+const chatRouter = Router();
 
-chatRouter.get('/', autorization('user'), getChat);
+chatRouter.get('/', authz('user'), getChat);
 
 export default chatRouter;

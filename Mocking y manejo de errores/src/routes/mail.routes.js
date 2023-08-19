@@ -4,26 +4,6 @@ import { __dirname } from "../utils/path.js";
 
 const router = new Router()
 
-router.get('/', async(req,res) => {
-    try {
-        await transporter.sendMail({
-            to:'martinacarri345@gmail.com',
-            subject:'Correo de prueba',
-            text: 'Correo de prueba',
-            html:`
-            <div>
-                <h1>Esto es un test</h1>
-            </div>`,
-            attachments: [{path: __dirname+'/public/img/avatar.png'}]
-        })
-
-        res.status(200).send('Mail sent')
-
-    } catch (error) {
-        res.status(500).json({message:error})
-    }
-})
-
 router.post('/ticket', async(req,res) => {
     const {code, amount, purchaser, purchase_datetime} = req.body.ticket
     // console.log(req.body.ticket);
@@ -37,6 +17,27 @@ router.post('/ticket', async(req,res) => {
                 <p>Code: ${code}</p>
                 <p>Time: ${purchase_datetime}</p>
                 <p>Total amount: ${amount}</p>
+            </div>`
+        })
+
+        res.status(200).json({message: 'Mail sent'})
+
+    } catch (error) {
+        res.status(500).json({error})
+    }
+})
+
+router.post('/resetpass', async(req,res) => {
+    const {email, link} = req.body
+    
+    try {
+        await transporter.sendMail({
+            to:email,
+            subject:'Reset your password',
+            html:`
+            <div>
+                <h1>Click this button to reset your password:</h1>
+                <a href="${link}"><button>Click here!</button></a>
             </div>`
         })
 

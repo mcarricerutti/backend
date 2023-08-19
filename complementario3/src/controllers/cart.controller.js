@@ -9,11 +9,9 @@ import CustomError from '../services/errors/CustomError.js';
 export const createCart = async (req, res) => {
     try {
         const newCart = await cartService.create({ products: [] });
-        //res.status(200).json({message: "Cart created",newCart});
         res.status(200).send(newCart);
     }
     catch (error) {
-        //res.status(500).json({message: "Error",error});
         req.logger.error("Error en createCart");
         res.status(500).send("ERROR: " + error);
     }
@@ -22,10 +20,8 @@ export const createCart = async (req, res) => {
 export const getCarts = async (req, res) => {
     try {
         const carts = await cartService.findAll();
-        //res.status(200).json({message: "Carts",carts});
         res.status(200).send(carts);
     } catch (error) {
-        //res.status(500).json({message: "Error",error});
         req.logger.error("Error en getCarts");
         res.status(500).send("ERROR: " + error);
     }
@@ -45,7 +41,7 @@ export const getCartById = async (req, res) => {
 export const addProductOnCart = async (req, res, next) => {
     const cid = req.params.cid;
     const pid = req.params.pid;
-    const { quantity } = req.body //Consulto el dato quantity enviado por postman
+    const { quantity } = req.body
     try {
         const cart = await cartService.findById(cid);
         const product = await productService.findById(pid);
@@ -153,7 +149,6 @@ export const purchaseCart = async (req, res) => {
     const cid = req.params.cid;
     try {
         const cart = await cartService.findByIdAndPopulate(cid, 'products.id_prod');
-        //console.log(cart);
         const productsWithStock = [];
         const productsWithoutStock = [];
         let purchaseTotal = 0;
@@ -175,20 +170,19 @@ export const purchaseCart = async (req, res) => {
                 const updateCart = { $pull: { products: { id_prod: cartProduct.id_prod._id } } };
                 const optionsCart = { new: true };
                 const updatedCart = await cartService.findOneAndUpdate(filterCart, updateCart, optionsCart);
+                res.send(updatedCart);
 
                 // Se reduce el stock del producto
                 const filterProduct = { _id: cartProduct.id_prod._id }
                 const updateProduct = { $inc: { stock: -cartProduct.quantity } };
                 const optionsProduct = { new: true };
                 const updatedProduct = await productService.findOneAndUpdate(filterProduct, updateProduct, optionsProduct);
+                res.send(updatedProduct);
             }
             else {
                 productsWithoutStock.push({id:cartProduct.id_prod._id, stock:product.stock, purchaseAttemtQuantity:cartProduct.quantity})
             }
         });
-
-        // console.log(productsWithStock);
-        // console.log(productsWithoutStock);
 
         //Create ticket
         if (productsWithStock.length > 0) {

@@ -10,20 +10,20 @@ import {
     resetCart,
     purchase
 } from '../controllers/cart.controller.js'
-import {authUser} from '../middlewares/auth.js'
+import {customJWTPolicy} from '../middlewares/auth.js'
 
 
 const cartRouter = new Router()
 
-cartRouter.get('/', getCarts)
-cartRouter.post('/', authUser, createCart)
-cartRouter.get('/:cid', getCartProducts)
-cartRouter.post('/:cid/products/:pid', authUser, addCartProduct)
-cartRouter.delete('/:cid/products/:pid', authUser, deleteCartProduct)
-cartRouter.put('/:cid', authUser, updateArrayProducts)
-cartRouter.put('/:cid/products/:pid', authUser, updateCartProductQuantity)
-cartRouter.delete('/:cid', authUser, resetCart)
+cartRouter.get('/', customJWTPolicy(['ADMIN']), getCarts)
+cartRouter.post('/', customJWTPolicy(['USER','PREMIUM']), createCart)
+cartRouter.get('/:cid', customJWTPolicy(['USER','PREMIUM','ADMIN']), getCartProducts)
+cartRouter.post('/:cid/products/:pid', customJWTPolicy(['USER','PREMIUM']), addCartProduct)
+cartRouter.delete('/:cid/products/:pid', customJWTPolicy(['USER','PREMIUM']), deleteCartProduct)
+cartRouter.put('/:cid', customJWTPolicy(['USER','PREMIUM']), updateArrayProducts)
+cartRouter.put('/:cid/products/:pid', customJWTPolicy(['USER','PREMIUM']), updateCartProductQuantity)
+cartRouter.delete('/:cid', customJWTPolicy(['USER','PREMIUM']), resetCart)
 
-cartRouter.get('/:cid/purchase', authUser, purchase)
+cartRouter.get('/:cid/purchase', customJWTPolicy(['USER','PREMIUM']), purchase)
 
 export default cartRouter

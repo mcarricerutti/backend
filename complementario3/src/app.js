@@ -19,6 +19,7 @@ import * as path from 'path';
 import compression from 'express-compression';
 import errorHandler from './middlewares/errors.js';
 import { addLogger } from './utils/logger.js';
+import { serveSwagger, setupSwagger } from './utils/swagger.js';
 
 
 //Configuraciones de Express
@@ -61,12 +62,6 @@ app.use(passport.session());
 app.use(compression({brotli:{enabled: true, zlib: {}},}));//Comprimir response con Brotli
 app.use(addLogger);//Agrego logger a request
 
-//const upload = multer({storage: storage})//metodo de multer para subir archivos
-
-// //Conexion a MongoDB Atlas
-// mongoose.connect(process.env.URL_MONGODB_ATLAS)
-// .then(() => console.log('Conectado a MongoDB Atlas'))
-// .catch(error => console.log(error));
 
 //Escuchar Servidor
 const httpserver = app.listen(port, () => {
@@ -104,6 +99,8 @@ app.use('/loggerTest', (req, res) => {
   req.logger.fatal("Fatal");
   res.send("Logger test");
 });//Ruta para evitar error 404 en rutas inexistentes
+
+app.use('/apidocs', serveSwagger, setupSwagger);
 
 //Custom Error Handler
 app.use(errorHandler);

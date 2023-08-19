@@ -13,5 +13,7 @@ export default {
     admin_email: process.env.ADMIN_EMAIL,
     admin_password: process.env.ADMIN_PASSWORD,
     gmail_user: process.env.GMAIL_USER,
-    gmail_password: process.env.GMAIL_PASSWORD
+    gmail_password: process.env.GMAIL_PASSWORD,
+    jwt_secret: process.env.JWT_SECRET,
+    jwt_cookie: process.env.JWT_COOKIE
 }

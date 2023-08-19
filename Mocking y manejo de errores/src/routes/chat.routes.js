@@ -1,9 +1,9 @@
 import { Router } from "express";
-import {authUser} from '../middlewares/auth.js'
+import {customJWTPolicy} from '../middlewares/auth.js'
 
 const chatRouter = Router()
 
-chatRouter.get('/', authUser, (req, res, next) => {
+chatRouter.get('/', customJWTPolicy(['USER','PREMIUM']), (req, res, next) => {
 
     res.render('chat', {
         title: 'Chat comunitario'

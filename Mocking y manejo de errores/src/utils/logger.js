@@ -1,20 +1,6 @@
 import winston from "winston";
 import { options } from "./commander.js";
 
-//Primera parte Logger
-// const logger = winston.createLogger({
-//     transports: [
-//         new winston.transports.Console({level: "http"}),
-//         new winston.transports.File({filename: './error.log', level: 'warn'}),
-//     ]
-// })
-
-// export const addLogguer = (req, res, next) => {
-//     req.logger = logger;
-//     req.logger.http(`${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`);
-//     next();
-// }
-
 const levelOptions = {
     levels: {
         fatal: 0,
@@ -75,6 +61,8 @@ const prodLogger = winston.createLogger({
 
 export const addLogguer = (req, res, next) => {
     //Usamos logger dependiendo del modo de ejecucion
-    req.logger = options.mode === "development" ? devLogger : prodLogger;
+    req.logger = options.mode === "dev" ? devLogger : prodLogger;
     next();
 }
+
+export const logger = (options.mode === 'dev') ? devLogger : prodLogger // Para usarlo en los lugares que no tienen el req

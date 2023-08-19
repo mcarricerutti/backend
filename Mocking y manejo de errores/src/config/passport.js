@@ -1,24 +1,34 @@
 import passport from 'passport'
 import config from './config.js'
-import userService from '../services/users.service.js'
+import {findByEmail, findById, createUser} from '../services/users.service.js'
 import { validatePassword } from '../utils/bcrypt.js'
-import { Strategy as LocalStrategy} from 'passport-local'
+import { Strategy as LocalStrategy } from 'passport-local'
+import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt'
 import { Strategy as GitHubStrategy} from 'passport-github2'
+import { getUserDTO } from '../persistencia/DTOs/user.js'
+import { cookieExtractor } from '../utils/cookie.extractor.js'
 
 const initializePassport = () => {
 
     // Register
     passport.use('register', new LocalStrategy(
-        { passReqToCallback: true, usernameField: 'email' },
-        async (req, username, password, done) => {
-            const {email} = req.body
+        { passReqToCallback: true, usernameField: 'email', session: false},
+        async (req, email, password, done) => {
+            const {first_name, last_name, gender, age, role} = req.body
             try {
-                const user = await userService.findByEmail(email)
+                if(!first_name || !last_name || !age || !email || !password){
+                    console.log('Todos los campos son requeridos');
+                    return done(null,false)
+                }
+
+                const user = await findByEmail(email)
                 if(user) {
+                    console.log('El usuario ya existe');
                     return done(null, false) // Usuario ya registrado
                 }
+                
                 // Llama al servicio que lo crea
-                const newUser = await userService.createUser(req.body)
+                const newUser = await createUser(req.body)
                 
                 return done(null, newUser)
 
@@ -28,24 +38,21 @@ const initializePassport = () => {
         }
     ))
 
-    //Config de sessions
-        //Inicializar la session
     passport.serializeUser((user, done) => {
         done(null,user._id)
     })
 
-        // Eliminar la session del user
     passport.deserializeUser(async (id, done) => {
-        const user = await userService.findById(id)
+        const user = await findById(id)
         done(null,user)
     })
 
     // Login
     passport.use('login', new LocalStrategy(
-        { usernameField: 'email' }, 
-        async (username, password, done) => {
+        { usernameField: 'email', session: false }, 
+        async (email, password, done) => {
             try {
-                const user = await userService.findByEmail(username)
+                const user = await findByEmail(email)
 
                 if(!user) { // No se encuentra el usuario
                     return done(null, false)
@@ -55,8 +62,10 @@ const initializePassport = () => {
                     return done(null, false) // Contraseña invalida
                 }
 
-                return done(null, user)// Usuario Logueado
+                // Devuelvo solo los datos no sensibles
+                const loggedUser = getUserDTO(user)
 
+                return done(null, loggedUser)// Usuario Logueado
 
             } catch (error) {
                 return done(error)
@@ -64,18 +73,33 @@ const initializePassport = () => {
         }
     ))
 
+    // JWT
+    passport.use('jwt', new JWTStrategy(
+        {
+            jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+            secretOrKey: config.jwt_secret
+        }, 
+        async(jwt_payload,done) => {
+            try {
+                return done(null,jwt_payload)
+            } catch (error) {
+                done(error)
+            }
+        }
+    ))
 
     // Github
     passport.use('github', new GitHubStrategy({
         clientID: config.github_client_id,
         clientSecret: config.github_client_secret,
-        callbackURL: "http://localhost:4000/api/sessions/github/callback"
+        callbackURL: "http://localhost:4000/api/sessions/github/callback",
+        passReqToCallback:true
       },
-      async (accessToken, refreshToken, profile, done) => {
+      async (req,accessToken, refreshToken, profile, done) => {
         const {name,email} = profile._json
         try {
-            const userDB = await userService.findByEmail(email)
-    
+            const userDB = await findByEmail(email)
+            // si existe en la DB lo devuelve
             if(userDB){
                 return done(null,userDB)
             }
@@ -87,8 +111,7 @@ const initializePassport = () => {
                 password: ' ',
                 method: 'github'
             }
-
-            const newUserDB = await userService.createUser(user)
+            const newUserDB = await createUser(user)
             done(null,newUserDB);
     
         } catch (error) {

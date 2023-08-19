@@ -1,45 +1,28 @@
 import { Router } from 'express';
-//import { CartManager } from '../CartManager.js';
 import { addProductOnCart, createCart, deleteCart, deleteProductOnCart, getCartById, getCarts, updateProductOnCart, updateProductQuantityOnCart, purchaseCart} from '../controllers/cart.controller.js';
-import autorization from '../middlewares/autorization.js';
+import authz from '../middlewares/autorization.js';
+import auth from '../middlewares/authentication.js';
 
 
-const cartRouter = Router(); //Router para manejo de rutas
+const cartRouter = Router(); 
 
-//FS -------------------------------------------------------------------------------------------
-// const cartManager = new CartManager('./src/carts.txt', './src/products.txt');
-// cartRouter.get('/:cid', async (req, res) => {
-//     const cid= req.params.cid
-//     const cart=await cartManager.getCartById(cid);//obtenemos los productos
-//     res.send(cart.products??cart);//enviamos los productos
-// });
-
-// cartRouter.post("/:cid/product/:pid", async (req, res) => {
-//     const cid= req.params.cid;
-//     const pid= req.params.pid;
-//     const { quantity } = req.body //Consulto el dato quantity enviado por postman
-//     res.send(await cartManager.addProduct(cid,pid,quantity))
-// })
-
-
-//MONGO -------------------------------------------------------------------------------------------
 cartRouter.get('/createcart', createCart);
 
 cartRouter.get('/', getCarts);
 
 cartRouter.get('/:cid', getCartById);
 
-cartRouter.get('/:cid/purchase', purchaseCart);
+cartRouter.put("/:cid",auth(), updateProductOnCart);
 
-cartRouter.post("/:cid/product/:pid",autorization('user','premium'), addProductOnCart);
+cartRouter.delete("/:cid",auth(),authz('admin'), deleteCart);
 
-cartRouter.delete("/:cid/product/:pid", deleteProductOnCart);
+cartRouter.get('/:cid/purchase',auth(), purchaseCart);
 
-cartRouter.delete("/:cid", deleteCart);
+cartRouter.post("/:cid/product/:pid",auth(),authz('user','premium'), addProductOnCart);
 
-cartRouter.put("/:cid", updateProductOnCart);
+cartRouter.delete("/:cid/product/:pid",auth(), deleteProductOnCart);
 
-cartRouter.put("/:cid/product/:pid", updateProductQuantityOnCart)
+cartRouter.put("/:cid/product/:pid",auth(), updateProductQuantityOnCart)
 
 //Otras Rutas
 cartRouter.put("*", async (req, res) => {

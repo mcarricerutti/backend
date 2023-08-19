@@ -1,0 +1,115 @@
+paths:
+  /api/users/:
+    get:
+      summary: Obtener todos los usuarios
+      tags:
+        - Users
+      responses:
+        200:
+          description: Consulta exitosa
+        500:
+          description: Consulta fallida
+  /api/users/{id}:
+    get:
+      summary: Obtener un usuario por id
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          description: id del usuario
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Consulta exitosa
+        500:
+          description: Consulta fallida
+  /api/users/mockusers/:
+    get:
+      summary: Obtener usuarios mockeados
+      tags:
+        - Users
+      responses:
+        200:
+          description: Consulta exitosa
+        500:
+          description: Consulta fallida
+  /api/users/premium/{id}:
+    get:
+      summary: Modificar rol de usuario entre "user" y "premium"
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          description: id del usuario
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Consulta exitosa
+        500:
+          description: Consulta fallida
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectID
+          description: MongoDB ObjectID.
+        first_name:
+          type: string
+          description: nombre del usuario
+        last_name:
+          type: string
+          description: apellido del usuario
+        email:
+          type: string
+        age:
+          type: integer
+          description: edad del usuario
+        role:
+          type: string
+          description: rol del usuario
+        password:
+          type: string
+          description: contraseña del usuario
+        cart:
+          type: object
+          description: carrito de compras del usuario
+          properties:
+            id_cart:
+              type: ObjectID
+              description: MongoDB ObjectID.
+        passwordModifiableUntil:
+          type: date
+          description: fecha hasta la cual se puede modificar la contraseña
+      example:
+        _id: 64d65a9ba1f16184178fc130,
+        first_name: Martina,
+        last_name: Carri Cerutti,
+        email: martinacarri345@gmail.com,
+        age: 25,
+        role: user,
+        password: $2b$15$wjkA87KIeDxITYathuNPr.FxCWLr3HDclvZAQxIQnBc5Jk7xaqWI6,
+        cart:
+          id_cart: 64d65a9ba1f16184178fc12e
+        passwordModifiableUntil: 2023-08-14T16:07:08.758+00:00
+    # UserResponse:
+    #   type: object
+    #   properties:
+    #     status:
+    #       type: string
+    #       description: estado de la respuesta
+    #       example: success
+    #     payload:
+    #       type: array
+    #       description: array de usuarios
+    #       items:
+    #         $ref: '#/components/schemas/User'
+    
+            

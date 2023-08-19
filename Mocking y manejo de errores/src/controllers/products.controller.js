@@ -25,6 +25,7 @@ export const getProductById = async (req,res,next) => {
         let producto = await getProdById(pid) // si no lo encuentra tira error y va al catch
 
         if(!producto) {
+            req.logger.error('Error trying to get product by id')
             return res.status(400).send(`El producto con id ${req.params.pid} no existe.`)
         }
 
@@ -32,7 +33,7 @@ export const getProductById = async (req,res,next) => {
 
     } catch (error) {
         res.logguer.error("Error en getProductById");
-        res.status(500).send(error.message);
+        return res.status(400).json(error);
     }
 }
 
@@ -52,11 +53,17 @@ export const addProduct = async (req,res,next) => {
         // Error si ya existe el producto con el code
         let producto = await getProd({code})
         if(producto) { 
-            return res.status(400).json({error: `El producto con el code ${code} ya existe.`}) 
+            req.logger.error('Error trying to add a new product')
+            return res.status(400).json({error: `El producto con el code ${code} ya existe.`})
         }
 
         // Crea el producto
-        const newProd = await addNewProduct({ title, description, code, price, status, stock, category, thumbnails })
+        const prod = { title, description, code, price, status, stock, category, thumbnails }
+        // si el que lo crea es un usuario premium, se le agrega su email al campo owner (por defecto es admin)
+        if(req.user.role === "premium"){
+            prod.owner = req.user.email
+        }
+        const newProd = await addNewProduct(prod)
         return res.status(200).json({message: `El producto se ha creado correctamente.`, newProd})
 
     } catch (error) {
@@ -71,8 +78,13 @@ export const updateProduct = async (req,res,next) => {
         let {title, description, code, price, status, stock, category, thumbnails } = req.body
         let { pid } = req.params
 
-        let obj = {title, description, code, price, status, stock, category, thumbnails }
-        
+        // si es un usuario premium y no es un producto suyo devuelve error
+        const product = await getProdById(pid) 
+        if(req.user.role === "premium" && product.owner !== req.user.email){
+            return res.status(403).json({error: 'You are not allowed to modify this product'})
+        }
+
+        let obj = {title, description, code, price, status, stock, category, thumbnails } 
         await updateProd(pid, obj)
 
         return res.status(200).json({message:'Producto actualizado correctamente'})
@@ -87,12 +99,20 @@ export const updateProduct = async (req,res,next) => {
 export const deleteProduct = async (req,res,next) => {
     try {
         let { pid } = req.params
-        const prod = await deleteProd(pid)
-        console.log(prod);
-        if(prod.deletedCount === 1) {
-            return res.status(200).json({message: 'Producto eliminado correctamente'})
+        // si es un usuario premium y no es un producto suyo devuelve error
+        const product = await getProdById(pid) 
+        if(req.user.role === "premium" && product.owner !== req.user.email){
+            return res.status(403).json({error: 'You are not allowed to delete this product'})
         }
-        return res.status(400).json({error: `El id ${pid} no es válido.`}) 
+
+        // en caso de que sea su producto o sea el admin
+        const prod = await deleteProd(pid)
+        if(prod.deletedCount !== 1) {
+            req.logger.error('Error trying to delete a product')
+            return res.status(400).json({error: `El id ${pid} no es válido.`})
+        }
+       
+        return res.status(200).json({message: 'Producto eliminado correctamente'})
         
     } catch (error) {
         res.logguer.error("Error en deleteProduct");

@@ -1,15 +1,14 @@
 import { Router } from "express";
-import { destroySession, current, resetPasswordEmail} from "../controllers/session.controller.js";
-import {auth} from '../middlewares/auth.js'
 import passport from "passport";
+import { current, login, logout, resetPwd, newpass} from "../controllers/session.controller.js";
 
 const sessionsRouter = new Router();
-
-sessionsRouter.post('/resetpasswordemail', resetPasswordEmail);
 
 sessionsRouter.post(
   "/signup",
   passport.authenticate("register", {
+    passReqToCallback: true,
+    session: false,
     failureRedirect: "/errorSignup",
     successRedirect: "/",
   })
@@ -18,23 +17,34 @@ sessionsRouter.post(
 sessionsRouter.post(
   "/login",
   passport.authenticate("login", {
-    failureRedirect: "/errorLogin",
-    successRedirect: "/products",
-  })
+    passReqToCallback: true,
+    session: false,
+    failureRedirect: "/errorLogin"
+  }),
+  login
 );
 
-sessionsRouter.get("/logout", destroySession);
+sessionsRouter.get("/logout", logout)
 
 // Passport con github
 sessionsRouter.get("/github",
   passport.authenticate("github", { scope: ["user:email"] })
 );
 
-sessionsRouter.get("/github/callback", passport.authenticate("github", {
-    failureRedirect: "/",
-    successRedirect: "/products",
-}));
+sessionsRouter.get("/github/callback", 
+  passport.authenticate("github", 
+    {
+      passReqToCallback:true,
+      session:false,
+      failureRedirect: "/"
+    }),
+    login
+);
 
-sessionsRouter.get("/current",auth, current);
+sessionsRouter.get("/current", passport.authenticate('jwt',{session:false}), current);
+
+sessionsRouter.post("/resetpwd", resetPwd);
+sessionsRouter.post("/newpass", newpass);
+
 
 export default sessionsRouter;

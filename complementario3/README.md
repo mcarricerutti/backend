@@ -1,4 +1,9 @@
-# coder-backend
+Iniciar en ambiente de desarrollo: 
+>npm run dev
 
-Iniciar: 
->node index.js
+Iniciar en ambiente de produccion: 
+>npm run start
+
+Apis
+## DOCUMENTACION
+http://localhost:8080/apidocs/

@@ -1,0 +1,208 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtener todos los productos
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    post:
+      summary: Crear un producto
+      tags:
+        - Products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /api/products/mockingproducts:
+    get:
+      summary: Obtener productos de ejemplo
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /api/products/{pid}:
+    get:
+      summary: Obtener un producto por su id
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: id del producto
+          schema:
+            type: string
+            example: 64de7c30b190ef46fb3059f9
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    put:
+      summary: Actualizar un producto por su id
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: id del producto
+          schema:
+            type: string
+            example: 64de7c30b190ef46fb3059f9
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProduct'
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    delete:
+      summary: Eliminar un producto por su id
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: id del producto
+          schema:
+            type: string
+            example: 64de7c30b190ef46fb3059f9
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        thumbnails:
+          type: array
+          items:
+            type: string
+        price:
+          type: number
+        code:
+          type: string
+        stock:
+          type: number
+        status:
+          type: string
+        category:
+          type: string
+        owner:
+          type: string
+      example:
+        _id: 64de7c30b190ef46fb3059f9
+        title: TECLADO GRIS
+        description: PLATA
+        code: A23
+        category: electronicos
+        price: 35000
+        stock: 12
+        status: true
+        thumbnails: []
+        owner: "mcerutti1717@gmail.com"
+    UpdateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        thumbnails:
+          type: array
+          items:
+            type: string
+        price:
+          type: number
+        code:
+          type: string
+        stock:
+          type: number
+        status:
+          type: string
+        category:
+          type: string
+      example:
+        title: TECLADO GRIS
+        description: PLATA BLANCA
+        code: A23
+        category: electronicos
+        price: 1770
+        stock: 12
+        status: true
+        thumbnails: []

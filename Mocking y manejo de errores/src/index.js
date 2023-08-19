@@ -21,12 +21,11 @@ import initializePassport from './config/passport.js'
 import errorHandler from "./middlewares/errors.js";
 import CustomError from "./services/errors/CustomError.js";
 import EErrors from "./services/errors/enumError.js";
-import compression from 'express-compression';
 import { addLogguer } from './utils/logger.js';
 
 
 const app = express()
-const PORT = config.port || 8080
+const PORT = config.port
 
 const httpServer = app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
 
@@ -34,25 +33,24 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.resolve(__dirname, './public')))
 app.use(cookieParser(config.signed_cookie))
-app.use(session({
-    store: MongoStorage.create({
-        mongoUrl: config.mongo_url,
-        mongoOptions: {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        },
-        ttl: 210
-    }),
-    secret: config.session_secret,
-    resave: true,
-    saveUninitialized: true
-}))
+
+// app.use(session({
+//     store: MongoStorage.create({
+//         mongoUrl: config.mongo_url,
+//         mongoOptions: {
+//             useNewUrlParser: true,
+//             useUnifiedTopology: true
+//         },
+//         ttl: 210
+//     }),
+//     secret: config.session_secret,
+//     resave: true,
+//     saveUninitialized: true
+// }))
 
 
 initializePassport()
 app.use(passport.initialize())
-app.use(passport.session())
-app.use(compression({brotli:{enabled: true, zlib: {}},}));//Comprimir response con Brotli
 app.use(addLogguer);//Agrego logger a request
 
 

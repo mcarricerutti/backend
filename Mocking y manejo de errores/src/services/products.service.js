@@ -1,5 +1,4 @@
 import {productsManager} from '../persistencia/DAOs/MongoDAOs/productsMongo.js';
-import { generateProduct } from '../utils/faker.js';
 
 // Devuelve los productos con paginate
 export const getAllProducts = async (status, category, limit, page, sort) => {
@@ -18,6 +17,17 @@ export const getAllProducts = async (status, category, limit, page, sort) => {
       return error
     }
 }
+
+// Devuelve todos los prods sin paginate
+export const getAllProds = async () => {
+    try {
+        const productos = await productsManager.findAll()
+        return productos
+    } catch (error) {
+      return error
+    }
+}
+
 // Devuelve el producto que coincide con el id
 export const getProdById = async (pid) => {
     try {
@@ -69,15 +79,15 @@ export const deleteProd = async (pid) => {
     }
 }
 
-export const mockProducts = (quantity) => {
-    try {
-        const products = [];
-        for (let i = 0; i < quantity; i++) {
-            const product = generateProduct();
-            products.push(product);
-        }
-        return products;
-    } catch (error) {
-        return error;
-    }
-}
+// export const mockProducts = (quantity) => {
+//     try {
+//         const products = [];
+//         for (let i = 0; i < quantity; i++) {
+//             const product = generateProduct();
+//             products.push(product);
+//         }
+//         return products;
+//     } catch (error) {
+//         return error;
+//     }
+// }
