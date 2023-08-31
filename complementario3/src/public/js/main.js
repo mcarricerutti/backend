@@ -17,7 +17,6 @@ formulario?.addEventListener('submit', (e)=>{
 
 //Cargar productos
 LoadProducts=(products)=>{
-    console.log("test");
     const productlist=document.getElementById('product-list');
     productlist.innerHTML='';
     products.forEach(product => {
@@ -31,7 +30,7 @@ LoadProducts=(products)=>{
         const btnDelete= productli.querySelector('.delete');
         btnDelete.addEventListener('click', (e)=>{
             const id=e.target.dataset.id;
-            console.log(id);
+            // console.log(id);
             socket.emit('client:deleteProduct', id);
         })
     });
@@ -64,7 +63,6 @@ if (window.location.href.includes('chat')) {
         allowOutsideClick: false,
     }).then((result) => {
         user = result.value;
-        console.log(user);
         socket.emit('client:onLoadMessages');
     });
 
@@ -93,35 +91,35 @@ if (window.location.href.includes('chat')) {
     };
 };
 
-// Add to CART ----------------------------------------------------------------------------
+// Add to CART 
+
 const postButtons=document.querySelectorAll('.postButton');
 
 postButtons.forEach(postButton=>{postButton.addEventListener('click', (e)=>{
     if(e.target.dataset.id===postButton.dataset.id) {
         const cid=document.getElementById('cartId').innerText.split(' ')[2]
-        console.log(cid);
         addToCart(postButton.dataset.id,cid).then(()=>window.location.href = `http://localhost:8080/api/carts/${cid}`);
     }
 })})
 
-//Agregar al carrito de ID hardcodeado
-const addToCart= async (pid,cid)=>{
+// //Agregar al carrito de ID hardcodeado
+// const addToCart= async (pid,cid)=>{
 
-    try {
-        const URL=`http://localhost:8080/api/carts/${cid}/product/${pid}`;
-        const response= await fetch(URL,{
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({"quantity": 1}),
-        });
-        console.log('Completed!', response);
-    } catch (error) {
-        console.error(`Error: ${error}`);
-    }
-};
+//     try {
+//         const URL=`http://localhost:8080/api/carts/${cid}/product/${pid}`;
+//         const response= await fetch(URL,{
+//             method: 'POST',
+//             headers: {
+//                 'Accept': 'application/json',
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({"quantity": 1}),
+//         });
+//         //console.log('Completed!', response);
+//     } catch (error) {
+//         console.error(`Error: ${error}`);
+//     }
+// };
 
 //Delete from CART ----------------------------------------------------------------------------
 const deleteButtons=document.querySelectorAll('.deleteButton');
@@ -136,7 +134,7 @@ deleteButtons.forEach(deleteButton=>{deleteButton.addEventListener('click', (e)=
 const deleteFromCart= async (pid)=>{
 //get url
 const cid=window.location.href.split("/").pop();
-console.log(cid);
+//console.log(cid);
     try {
         const response= await fetch(`http://localhost:8080/api/carts/${cid}/product/${pid}`,{
             method: 'DELETE',
@@ -145,7 +143,7 @@ console.log(cid);
                 'Content-Type': 'application/json'
             },
         });
-        console.log('Completed!', response);
+        //console.log('Completed!', response);
     } catch (error) {
         console.error(`Error: ${error}`);
     }

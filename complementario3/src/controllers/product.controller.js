@@ -110,7 +110,6 @@ export const addProduct = async (req, res, next) => {
       //res.status(401).send("El producto no contiene todos los datos requeridos");
     } 
     const obj={...req.body, owner: req.session.user.email};
-    console.log(obj);
     res.status(200).send(await productService.create(obj));
   } catch (error) {
     req.logger.error("Error en addProduct");
@@ -167,8 +166,6 @@ export const realTimeProducts = async (req, res) => {
 
   //Conexion a socket.io
   io.on("connection", async (socket) => {
-    //cuando se establece la conexion envio un mensaje
-    console.log("Cliente conectado a RealTimeProducts");
 
     //Onload
     socket.emit("server:onloadProducts", await productService.findAll());
@@ -206,8 +203,7 @@ export const realTimeProducts = async (req, res) => {
 
   //Render
   try {
-    const products = await productService.findAll(); //obtenemos los productos
-    //const products = await productModel.paginate({}, { limit: 10, page: 1, sort: { price: 1 }, lean: true})
+    const products = await productService.findAll();
     res.status(200).render("realtimeproducts", { products: products });
   } catch (error) {
     req.logger.error("Error en realTimeProducts");

@@ -1,14 +1,18 @@
 import 'dotenv/config';
 import passport from "passport";
-import local from "passport-local";
+import LocalStrategy from "passport-local";
 import GitHubStrategy from "passport-github2";
 import GoogleStrategy from "passport-google-oauth20";
 import userModel from "../persistencia/mongoDB/models/users.model.js";
 import cartModel from '../persistencia/mongoDB/models/carts.model.js';
 import { createHash, validatePassword } from "../utils/bcript.js";
+import { options } from '../utils/commander.js'
 
-const LocalStrategy = local.Strategy;
+const enviroment = options.mode
+const domain = enviroment === 'production' ? '' : 'http://localhost:${process.env.PORT}';
+
 const initializePassport = () => {
+
     passport.use('register', new LocalStrategy(
         { passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
             //passReqToCallback permite pasar el request al callback
@@ -87,7 +91,7 @@ const initializePassport = () => {
     passport.use('google',new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:8080/api/sessions/googlecallback"
+        callbackURL: `${domain}/api/sessions/googlecallback`
       },
       async (accessToken, refreshToken, profile, cb)=> {
         try {

@@ -36,23 +36,36 @@
 <br>
 <h2>Cart ID: {{cart._id}}</h2>
 <br>
-<ul id="docs">
-    {{#each cart.products}}
-    <li>
-        <p><strong>id:</strong> {{this.id_prod._id}}</p>
-        <p><strong>title:</strong> {{this.id_prod.title}}</p>
-        <p><strong>description:</strong>{{this.id_prod.description}}</p>
-        <p><strong>thumbnails:</strong> {{this.id_prod.thumbnails}}</p>
-        <p><strong>price:</strong> {{this.id_prod.price}}</p>
-        <p><strong>code:</strong> {{this.id_prod.code}}</p>
-        <p><strong>stock:</strong> {{this.id_prod.stock}}</p>
-        <p><strong>category:</strong> {{this.id_prod.category}}</p>
-        <br>
-        <p><strong>quantity:</strong> {{this.quantity}}</p>
-        <br>
-        <button class="deleteButton" data-id={{this.id_prod._id}}>Borrar</button>
-    {{/each}}
-</ul>
-<br>
-<button onclick="window.location.href='/api/carts/{{cart._id}}/purchase'">Comprar</button>
+<ul id="docs" class="d-flex flex-column gap-3 p-0">
+        {{#each cart.products}}
+        <ul class="card p-3 list-unstyled gap-1 d-flex flex-row flex-wrap">
+            <img src={{this.id_prod.thumbnails}}[0] class="align-self-center" alt="..." style="height: 200px;">
+            <div class="w-75">
+                <li><strong>id:</strong> {{this.id_prod._id}}</li>
+                <li><strong>title:</strong> {{this.id_prod.title}}</li>
+                <li class="text-truncate"><strong>description:</strong>{{this.id_prod.description}}</li>
+                <li class="text-truncate"><strong>thumbnails:</strong> {{this.id_prod.thumbnails}}</li>
+                <li><strong>price:</strong> {{this.id_prod.price}}</li>
+                <li><strong>code:</strong> {{this.id_prod.code}}</li>
+                <li><strong>stock:</strong> {{this.id_prod.stock}}</li>
+                <li><strong>category:</strong> {{this.id_prod.category}}</li>
+                <li><strong>quantity:</strong> {{this.quantity}}</li>
+                <br />
+            </div>
+            <button class="deleteButton btn btn-outline-primary w-auto h-auto p-3 m-3 align-self-end"
+                data-id={{this.id_prod._id}}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z">
+                    </path>
+                </svg>
+            </button>
+            {{!-- <button class="postButton" data-id={{this._id}}>Borrar</button> --}}
+        </ul>
+        {{/each}}
+    </ul>
+    <br />
+    <button class="btn btn-outline-primary"
+        onclick="window.location.href='/api/carts/{{cart._id}}/purchase'">Comprar</button>
 

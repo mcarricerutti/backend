@@ -48,15 +48,6 @@ export const addProductOnCart = async (req, res, next) => {
         if (!product) {
             res.status(200).send("Producto no existe" + product);
         }
-        //if product is already in cart
-        if (cart.products.find(product => product.id_prod == pid)) {
-            //find cart and product and update incrementing quantity
-            const filter = { _id: cid, "products.id_prod": pid };
-            const update = { $inc: { "products.$.quantity": quantity } };
-            const options = { new: true };
-            const updatedCart = await cartService.findOneAndUpdate(filter, update, options);
-            res.status(200).send(updatedCart);
-        }
         if(req.session.user.role == "premium" && product.owner == req.session.user.email){
             CustomError.createError({
                 name: "Add to cart product error",
@@ -65,14 +56,24 @@ export const addProductOnCart = async (req, res, next) => {
                 code: EErrors.AUTORIZATION_ERROR,
             }); //Lanzo un error
         }
+        if (cart.products.find(product => product.id_prod == pid)) {
+            //find cart and product and update incrementing quantity
+            const filter = { _id: cid, "products.id_prod": pid };
+            const update = { $inc: { "products.$.quantity": quantity } };
+            const options = { new: true };
+            const updatedCart = await cartService.findOneAndUpdate(filter, update, options);
+            // res.status(200).send(updatedCart);
+            res.status(200).redirect(`/api/carts/${cid}`);
+        }
         else {
             //if product is not in cart, add it
             const filter = { _id: cid };
             const update = { $push: { products: { id_prod: pid, quantity: quantity } } };
             const options = { new: true };
             const updatedCart = await cartService.findOneAndUpdate(filter, update, options);
-            //console.log(updatedCart);
-            res.status(200).send(updatedCart);
+            req.logger.info(updatedCart);
+            // res.status(200).send(updatedCart);
+            res.status(200).redirect(`/api/carts/${cid}`);
         }
     } catch (error) {
         req.logger.error("Error en addProductOnCart");
@@ -170,14 +171,12 @@ export const purchaseCart = async (req, res) => {
                 const updateCart = { $pull: { products: { id_prod: cartProduct.id_prod._id } } };
                 const optionsCart = { new: true };
                 const updatedCart = await cartService.findOneAndUpdate(filterCart, updateCart, optionsCart);
-                res.send(updatedCart);
 
                 // Se reduce el stock del producto
                 const filterProduct = { _id: cartProduct.id_prod._id }
                 const updateProduct = { $inc: { stock: -cartProduct.quantity } };
                 const optionsProduct = { new: true };
                 const updatedProduct = await productService.findOneAndUpdate(filterProduct, updateProduct, optionsProduct);
-                res.send(updatedProduct);
             }
             else {
                 productsWithoutStock.push({id:cartProduct.id_prod._id, stock:product.stock, purchaseAttemtQuantity:cartProduct.quantity})

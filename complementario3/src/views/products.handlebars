@@ -51,8 +51,16 @@
                 <p><strong>stock:</strong> {{this.stock}}</p>
                 <p><strong>category:</strong> {{this.category}}</p>
                 <br>
-                <button data-id={{this._id}} class="postButton btn btn-primary bottom-0">Agregar 1 producto al
-                    carrito</button>
+                <form action="/api/carts/{{../user.cart.id_cart}}/product/{{this._id}}" method="post"
+                    class="w-100 d-flex flex-column gap-2 mt-auto p-3 border rounded">
+                    <label for="quantity">Cantidad:</label>
+                    <input type="number" id="quantity" value="1" name="quantity" min="1" max="5" class="w-25">
+                    <input type="submit" class="btn btn-primary" value="Agregar al carrito" onclick="
+                        window.location.href='/api/carts/{{../user.cart.id_cart}}'
+                        ">
+                </form>
+                {{!-- <button data-id={{this._id}} class="postButton btn btn-primary bottom-0">Agregar 1 producto al
+                    carrito</button> --}}
             </div>
         </li>
 
